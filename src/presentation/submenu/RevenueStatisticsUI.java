@@ -1,4 +1,7 @@
-package presentation;
+package presentation.submenu;
+
+import presentation.IGenericUI;
+import presentation.MainMenuAfterLogin;
 
 import java.util.Scanner;
 

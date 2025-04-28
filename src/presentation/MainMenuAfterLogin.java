@@ -1,8 +1,18 @@
 package presentation;
 
+import presentation.submenu.CustomerManagementUI;
+import presentation.submenu.InvoiceManagementUI;
+import presentation.submenu.ProductManagementUI;
+import presentation.submenu.RevenueStatisticsUI;
+
 import java.util.Scanner;
 
 public class MainMenuAfterLogin implements IGenericUI {
+    private static ProductManagementUI productManagementUI = new ProductManagementUI();
+    private static CustomerManagementUI customerManagementUI = new CustomerManagementUI();
+    private static InvoiceManagementUI invoiceManagementUI = new InvoiceManagementUI();
+    private static RevenueStatisticsUI revenueStatisticsUI = new RevenueStatisticsUI();
+
     @Override
     public void showMenu() {
         System.out.println("========== MENU CHÍNH ==========");
@@ -24,7 +34,7 @@ public class MainMenuAfterLogin implements IGenericUI {
 
             switch (choice) {
                 case 1:
-                    PhoneManagementUI.runPhoneManagement();
+                    productManagementUI.runPhoneManagement();
                     break;
                 case 2:
                     CustomerManagementUI.runCustomerUI();

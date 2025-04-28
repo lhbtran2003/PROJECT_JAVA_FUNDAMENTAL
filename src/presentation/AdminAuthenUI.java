@@ -1,7 +1,7 @@
 package presentation;
 
 import bussiness.dao.AdminAuthenDAO;
-import bussiness.entity.Admin;
+import entity.Admin;
 
 import java.util.Scanner;
 

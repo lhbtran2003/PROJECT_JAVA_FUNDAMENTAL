@@ -1,6 +1,6 @@
 package bussiness.dao;
 
-import bussiness.entity.Admin;
+import entity.Admin;
 import config.DBConnection;
 
 import java.sql.Connection;
@@ -16,6 +16,22 @@ public class AdminAuthenDAO {
 
     public static AdminAuthenDAO getInstance() {
         return instance;
+    }
+
+    public static String getUsername() {
+        return username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    public static void setUsername(String username) {
+        AdminAuthenDAO.username = username;
+    }
+
+    public static void setPassword(String password) {
+        AdminAuthenDAO.password = password;
     }
 
     public static Admin adminAuthen() {
@@ -34,21 +50,5 @@ public class AdminAuthenDAO {
             throw new RuntimeException(e);
         }
         return null;
-    }
-
-    public static String getUsername() {
-        return username;
-    }
-
-    public static String getPassword() {
-        return password;
-    }
-
-    public static void setUsername(String username) {
-        AdminAuthenDAO.username = username;
-    }
-
-    public static void setPassword(String password) {
-        AdminAuthenDAO.password = password;
     }
 }

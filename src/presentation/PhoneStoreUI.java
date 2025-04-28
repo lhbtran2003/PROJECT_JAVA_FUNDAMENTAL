@@ -13,8 +13,8 @@ public class PhoneStoreUI {
     public static void main(String[] args) {
         while (true) {
             showMenu();
-            System.out.print("Nhap lựa chọn: ");
-            Byte choice = Byte.parseByte(new Scanner(System.in).nextLine());
+            System.out.print("Nhập lựa chọn: ");
+            byte choice = Byte.parseByte(new Scanner(System.in).nextLine());
 
             switch (choice) {
                 case 1:

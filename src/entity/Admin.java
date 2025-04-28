@@ -1,4 +1,4 @@
-package bussiness.entity;
+package entity;
 
 public class Admin {
     private int admin_id;
