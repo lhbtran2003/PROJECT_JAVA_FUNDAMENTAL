@@ -191,3 +191,80 @@ WHERE stock BETWEEN min_stock AND max_stock;
 END //
 
 DELIMITER ;
+
+-- Procedure thêm value vào customer
+DELIMITER
+//
+
+CREATE PROCEDURE AddCustomer(
+    IN c_name VARCHAR (100),
+    IN c_phone VARCHAR (20),
+    IN c_email VARCHAR(100),
+    IN c_address VARCHAR(255)
+)
+BEGIN
+INSERT INTO customer(name, phone, email, address)
+VALUES (c_name, c_phone, c_email, c_address);
+END
+//
+
+DELIMITER ;
+
+-- Procedure lấy danh sách khách hàng
+DELIMITER //
+
+CREATE PROCEDURE getAllCustomer ()
+BEGIN
+SELECT * FROM customer;
+end //
+DELIMITER ;
+
+-- Procedure thêm mới khách hàng
+DELIMITER //
+
+CREATE PROCEDURE AddCustomer(
+    IN c_name VARCHAR(100),
+    IN c_phone VARCHAR(20),
+    IN c_email VARCHAR(100),
+    IN c_address VARCHAR(255)
+)
+BEGIN
+INSERT INTO customer(name, phone, email, address)
+VALUES (c_name, c_phone, c_email, c_address);
+END //
+
+DELIMITER ;
+
+-- Procedure cập nhật thông tin khách hàng
+DELIMITER //
+
+CREATE PROCEDURE updateCustomerById(
+    IN c_id INT,
+    IN c_name VARCHAR(100),
+    IN c_phone VARCHAR(20),
+    IN c_email VARCHAR(100),
+    IN c_address VARCHAR(255)
+)
+BEGIN
+UPDATE customer
+SET
+    name = c_name,
+    phone = c_phone,
+    email = c_email,
+    address = c_address
+WHERE id = c_id;
+END //
+
+DELIMITER ;
+
+-- Procedure xóa khách hàng theo id
+DELIMITER //
+
+CREATE PROCEDURE deleteCustomerById(IN id_input INT)
+BEGIN
+DELETE
+FROM customer
+WHERE id = id_input;
+end //
+
+

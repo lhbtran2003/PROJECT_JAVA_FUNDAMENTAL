@@ -38,7 +38,8 @@ public class ProductDAOImp implements IProductDAO {
         );
     }
 
-    private List<Product> executeQueryWithParams(String sql, Object... params) {
+    @Override
+    public List<Product> executeQueryWithParams(String sql, Object... params) {
         List<Product> list = new ArrayList<>();
         try (Connection con = DBConnection.getConnection();
              CallableStatement cstmt = con.prepareCall(sql)) {
@@ -69,9 +70,20 @@ public class ProductDAOImp implements IProductDAO {
 
     @Override
     public List<Product> findAll() {
-       List<Product> products = executeQueryWithParams(FINDALL, null);
-       return products;
+        List<Product> list = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection();
+             CallableStatement cstmt = con.prepareCall(FINDALL);
+             ResultSet rs = cstmt.executeQuery()) {
+            while (rs.next()) {
+                Product product = mapProduct(rs);
+                list.add(product);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return list;
     }
+
 
 
     @Override

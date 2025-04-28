@@ -37,7 +37,7 @@ public class MainMenuAfterLogin implements IGenericUI {
                     productManagementUI.runPhoneManagement();
                     break;
                 case 2:
-                    CustomerManagementUI.runCustomerUI();
+                    customerManagementUI.runCustomerUI();
                     break;
                 case 3:
                     InvoiceManagementUI.runInvoiceUI();

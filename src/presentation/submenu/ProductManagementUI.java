@@ -1,5 +1,6 @@
 package presentation.submenu;
 
+import bussiness.service.product.IProductService;
 import bussiness.service.product.ProductServiceImpl;
 import entity.Product;
 import presentation.IGenericUI;
@@ -10,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductManagementUI implements IGenericUI {
-    private final ProductServiceImpl productServiceImpl;
+    private final IProductService productServiceImpl;
 
     public ProductManagementUI() {
         productServiceImpl = ProductServiceImpl.getInstance();

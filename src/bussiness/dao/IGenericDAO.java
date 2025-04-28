@@ -7,5 +7,6 @@ public interface IGenericDAO<T,E> {
     void save (T t); // cả logic them mới và chỉnh sửa
     void deleteById (E id);
     T findById (E id);
+    List<T> executeQueryWithParams(String sql, Object[] params);
 
 }
