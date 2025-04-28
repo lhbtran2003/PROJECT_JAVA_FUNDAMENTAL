@@ -28,54 +28,49 @@ public class ProductDAOImp implements IProductDAO {
         return instance;
     }
 
-    @Override
-    public Product findById(Integer id) {
-        Connection con = DBConnection.getConnection();
+    private Product mapProduct(ResultSet rs) throws SQLException {
+        return new Product(
+                rs.getInt("id"),
+                rs.getString("name"),
+                rs.getString("brand"),
+                rs.getDouble("price"),
+                rs.getInt("stock")
+        );
+    }
 
-        try {
-            CallableStatement cstmt = con.prepareCall(FINDBYID);
-            cstmt.setInt(1, id);
-            ResultSet rs = cstmt.executeQuery();
-            while (rs.next()) {
-                return new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("brand"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock")
-                );
+    private List<Product> executeQueryWithParams(String sql, Object... params) {
+        List<Product> list = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection();
+             CallableStatement cstmt = con.prepareCall(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                cstmt.setObject(i + 1, params[i]);
+            }
+            try (ResultSet rs = cstmt.executeQuery()) {
+                while (rs.next()) {
+                    Product product = mapProduct(rs);
+                    list.add(product);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        } finally {
-            DBConnection.closeConnection(con);
         }
-        return null;
+        return list;
+    }
+
+
+    @Override
+    public Product findById(Integer id) {
+        List<Product> product = executeQueryWithParams(FINDBYID, id);
+        if (product.isEmpty()) {
+            return null;
+        }
+        return product.getFirst();
     }
 
     @Override
     public List<Product> findAll() {
-        List<Product> list = new ArrayList<>();
-        Connection con = DBConnection.getConnection();
-        try {
-            CallableStatement cstmt = con.prepareCall(FINDALL);
-            ResultSet rs = cstmt.executeQuery();
-            while (rs.next()) {
-                Product product = new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("brand"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock")
-                );
-                list.add(product);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DBConnection.closeConnection(con);
-        }
-        return list;
+       List<Product> products = executeQueryWithParams(FINDALL, null);
+       return products;
     }
 
 
@@ -122,80 +117,16 @@ public class ProductDAOImp implements IProductDAO {
 
     @Override
     public List<Product> findByBrandName(String brandName) {
-        Connection con = DBConnection.getConnection();
-        List<Product> list = new ArrayList<>();
-        try {
-            CallableStatement cstmt = con.prepareCall(SEARCHBYBRAND);
-            cstmt.setString(1, brandName);
-            ResultSet rs = cstmt.executeQuery();
-            while (rs.next()) {
-                Product product = new Product();
-                product.setId(rs.getInt("id"));
-                product.setName(rs.getString("name"));
-                product.setBrand(rs.getString("brand"));
-                product.setPrice(rs.getDouble("price"));
-                product.setStock(rs.getInt("stock"));
-                list.add(product);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DBConnection.closeConnection(con);
-        }
-        return list;
+      return executeQueryWithParams(SEARCHBYBRAND, brandName);
     }
 
     @Override
     public List<Product> findByPrice(double minPrice, double maxPrice) {
-        List<Product> list = new ArrayList<>();
-        Connection con = DBConnection.getConnection();
-        try {
-            CallableStatement call = con.prepareCall(SEARCHBYPRICE);
-            call.setDouble(1, minPrice);
-            call.setDouble(2, maxPrice);
-            ResultSet rs = call.executeQuery();
-            while (rs.next()) {
-                Product product = new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("brand"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock")
-                );
-                list.add(product);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DBConnection.closeConnection(con);
-        }
-        return list;
+       return executeQueryWithParams(SEARCHBYPRICE, minPrice, maxPrice);
     }
 
     @Override
     public List<Product> findByStock(int minStock, int maxStock) {
-        List<Product> list = new ArrayList<>();
-        Connection con = DBConnection.getConnection();
-        try {
-            CallableStatement call = con.prepareCall(SEARCHBYSTOCK);
-            call.setInt(1, minStock);
-            call.setInt(2, maxStock);
-            ResultSet rs = call.executeQuery();
-            while (rs.next()) {
-                Product product = new Product(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("brand"),
-                        rs.getDouble("price"),
-                        rs.getInt("stock")
-                );
-                list.add(product);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            DBConnection.closeConnection(con);
-        }
-        return list;
+      return executeQueryWithParams(SEARCHBYSTOCK, minStock, maxStock);
     }
 }
