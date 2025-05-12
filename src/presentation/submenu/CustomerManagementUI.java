@@ -84,18 +84,7 @@ public class CustomerManagementUI implements IGenericUI {
 
     private void getAllCustomerInPresentation() {
         List<Customer> customers = customerServiceImpl.getAll();
-
-        if (customers.isEmpty()) {
-            System.out.println("😭 Danh sách khách hàng hiện đang trống.");
-            return;
-        }
-        System.out.println("========== Danh Sách Sản Phẩm ==========");
-        for (Customer customer : customers) {
-            System.out.println("ID: " + customer.getId() + ", Name: " + customer.getName() +
-                    ", Phone: " + customer.getPhone() + ", Email: " + customer.getEmail() +
-                    ", Address: " + customer.getAddress());
-        }
-        System.out.println("========================================");
+        DisplayUIHelper.showCustomerList(customers);
     }
 
     private void updateCustomerInPresentation(Scanner sc) {

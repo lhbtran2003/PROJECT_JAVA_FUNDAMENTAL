@@ -9,4 +9,6 @@ public interface IProductService extends IGenericService<Product, Integer> {
      List<Product> getProductsByBrandName(String brandName);
      List<Product> getProductsByPrice(double minPrice, double maxPrice);
      List<Product> getProductsByStock(int minStock, int maxStock);
+     List<Product> getProductsByName(String name);
+     void updateProductStock(int productId, int newStock);
 }

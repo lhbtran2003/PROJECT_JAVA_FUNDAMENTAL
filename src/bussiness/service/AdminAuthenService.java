@@ -1,6 +1,6 @@
 package bussiness.service;
 
-import bussiness.dao.AdminAuthenDAO;
+import bussiness.dao.auth.AdminAuthenDAO;
 
 public class AdminAuthenService {
     public static AdminAuthenDAO instance = AdminAuthenDAO.getInstance();

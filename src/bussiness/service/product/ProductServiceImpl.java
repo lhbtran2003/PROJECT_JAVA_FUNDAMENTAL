@@ -61,4 +61,14 @@ public class ProductServiceImpl implements IProductService{
     public List<Product> getProductsByStock(int minStock, int maxStock) {
         return productDAOImp.findByStock(minStock, maxStock);
     }
+
+    @Override
+    public List<Product> getProductsByName(String name) {
+        return productDAOImp.findByName(name);
+    }
+
+    @Override
+    public void updateProductStock(int productId, int newStock) {
+        productDAOImp.updateStock(productId, newStock);
+    }
 }

@@ -1,4 +1,4 @@
-package bussiness.dao;
+package bussiness.dao.auth;
 
 import entity.Admin;
 import config.DBConnection;

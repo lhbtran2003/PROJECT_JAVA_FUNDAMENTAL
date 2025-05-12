@@ -19,6 +19,8 @@ public class ProductDAOImp implements IProductDAO {
     private final String DELETE = "{CALL deleteProductById(?)}";
     private final String SEARCHBYPRICE = "{CALL searchProductByPrice(?, ?)}";
     private final String SEARCHBYSTOCK = "{CALL searchProductByStock(?, ?)}";
+    private final String SEARCHBYNAME = "{CALL searchProductByName(?)}";
+    private final String UPDATESTOCK = "{CALL updateProductStock(?, ?)}";
     private static ProductDAOImp instance;
 
     public static ProductDAOImp getInstance() {
@@ -140,5 +142,23 @@ public class ProductDAOImp implements IProductDAO {
     @Override
     public List<Product> findByStock(int minStock, int maxStock) {
       return executeQueryWithParams(SEARCHBYSTOCK, minStock, maxStock);
+    }
+
+    @Override
+    public List<Product> findByName(String name) {
+        return executeQueryWithParams(SEARCHBYNAME, name);
+    }
+
+    @Override
+    public void updateStock(int productId, int newStock) {
+        Connection conn = DBConnection.getConnection();
+        try {
+            CallableStatement call = conn.prepareCall(UPDATESTOCK);
+            call.setInt(1, productId);
+            call.setInt(2, newStock);
+            call.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

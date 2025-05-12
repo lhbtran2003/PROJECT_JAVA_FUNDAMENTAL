@@ -1,8 +1,8 @@
 CREATE
-DATABASE phone_store_management;
+    DATABASE phone_store_management;
 
 USE
-phone_store_management;
+    phone_store_management;
 
 -- 1. Bảng Admin
 CREATE TABLE admin
@@ -63,11 +63,11 @@ VALUES ('admin', '123');
 DELIMITER
 //
 
-CREATE PROCEDURE GetAdminInfo(IN input_username VARCHAR (50))
+CREATE PROCEDURE GetAdminInfo(IN input_username VARCHAR(50))
 BEGIN
-SELECT id, username, password
-FROM Admin
-WHERE username = input_username;
+    SELECT id, username, password
+    FROM Admin
+    WHERE username = input_username;
 END
 //
 
@@ -78,14 +78,14 @@ DELIMITER
 //
 
 CREATE PROCEDURE AddProduct(
-    IN p_name VARCHAR (100),
-    IN p_brand VARCHAR (50),
-    IN p_price DECIMAL (12,2),
+    IN p_name VARCHAR(100),
+    IN p_brand VARCHAR(50),
+    IN p_price DECIMAL(12, 2),
     IN p_stock INT
 )
 BEGIN
-INSERT INTO Product(name, brand, price, stock)
-VALUES (p_name, p_brand, p_price, p_stock);
+    INSERT INTO Product(name, brand, price, stock)
+    VALUES (p_name, p_brand, p_price, p_stock);
 END
 //
 
@@ -97,8 +97,8 @@ DELIMITER
 
 CREATE PROCEDURE getAllProduct()
 BEGIN
-SELECT *
-FROM Product;
+    SELECT *
+    FROM Product;
 END
 //
 
@@ -108,11 +108,11 @@ DELIMITER ;
 DELIMITER
 //
 
-CREATE PROCEDURE searchProductsByBrand(IN brand_input VARCHAR (100))
+CREATE PROCEDURE searchProductsByBrand(IN brand_input VARCHAR(100))
 BEGIN
-SELECT *
-FROM product
-WHERE brand LIKE brand_input;
+    SELECT *
+    FROM product
+    WHERE brand LIKE brand_input;
 END
 //
 
@@ -124,9 +124,9 @@ DELIMITER
 
 CREATE PROCEDURE getProductById(IN id_input int)
 BEGIN
-SELECT *
-FROM product
-WHERE id = id_input;
+    SELECT *
+    FROM product
+    WHERE id = id_input;
 END
 //
 
@@ -138,18 +138,18 @@ DELIMITER
 
 CREATE PROCEDURE updateProductById(
     IN p_id INT,
-    IN p_name VARCHAR (100),
-    IN p_brand VARCHAR (100),
+    IN p_name VARCHAR(100),
+    IN p_brand VARCHAR(100),
     IN p_price DOUBLE,
     IN p_stock INT
 )
 BEGIN
-UPDATE Product
-SET name  = p_name,
-    brand = p_brand,
-    price = p_price,
-    stock = p_stock
-WHERE id = p_id;
+    UPDATE Product
+    SET name  = p_name,
+        brand = p_brand,
+        price = p_price,
+        stock = p_stock
+    WHERE id = p_id;
 END
 //
 
@@ -160,9 +160,9 @@ DELIMITER //
 
 CREATE PROCEDURE deleteProductById(IN id_input int)
 BEGIN
-DELETE
-FROM product
-WHERE id = id_input;
+    DELETE
+    FROM product
+    WHERE id = id_input;
 END //
 
 DELIMITER ;
@@ -172,10 +172,10 @@ DELIMITER //
 
 CREATE PROCEDURE searchProductByPrice(IN min_price int, IN max_price int)
 BEGIN
-SELECT *
-FROM product
-WHERE price >= min_price
-  AND price <= max_price;
+    SELECT *
+    FROM product
+    WHERE price >= min_price
+      AND price <= max_price;
 END //
 
 DELIMITER ;
@@ -185,9 +185,9 @@ DELIMITER //
 
 CREATE PROCEDURE searchProductByStock(IN min_stock int, IN max_stock int)
 BEGIN
-SELECT *
-FROM product
-WHERE stock BETWEEN min_stock AND max_stock;
+    SELECT *
+    FROM product
+    WHERE stock BETWEEN min_stock AND max_stock;
 END //
 
 DELIMITER ;
@@ -197,14 +197,14 @@ DELIMITER
 //
 
 CREATE PROCEDURE AddCustomer(
-    IN c_name VARCHAR (100),
-    IN c_phone VARCHAR (20),
+    IN c_name VARCHAR(100),
+    IN c_phone VARCHAR(20),
     IN c_email VARCHAR(100),
     IN c_address VARCHAR(255)
 )
 BEGIN
-INSERT INTO customer(name, phone, email, address)
-VALUES (c_name, c_phone, c_email, c_address);
+    INSERT INTO customer(name, phone, email, address)
+    VALUES (c_name, c_phone, c_email, c_address);
 END
 //
 
@@ -213,9 +213,9 @@ DELIMITER ;
 -- Procedure lấy danh sách khách hàng
 DELIMITER //
 
-CREATE PROCEDURE getAllCustomer ()
+CREATE PROCEDURE getAllCustomer()
 BEGIN
-SELECT * FROM customer;
+    SELECT * FROM customer;
 end //
 DELIMITER ;
 
@@ -229,8 +229,8 @@ CREATE PROCEDURE AddCustomer(
     IN c_address VARCHAR(255)
 )
 BEGIN
-INSERT INTO customer(name, phone, email, address)
-VALUES (c_name, c_phone, c_email, c_address);
+    INSERT INTO customer(name, phone, email, address)
+    VALUES (c_name, c_phone, c_email, c_address);
 END //
 
 DELIMITER ;
@@ -246,13 +246,12 @@ CREATE PROCEDURE updateCustomerById(
     IN c_address VARCHAR(255)
 )
 BEGIN
-UPDATE customer
-SET
-    name = c_name,
-    phone = c_phone,
-    email = c_email,
-    address = c_address
-WHERE id = c_id;
+    UPDATE customer
+    SET name    = c_name,
+        phone   = c_phone,
+        email   = c_email,
+        address = c_address
+    WHERE id = c_id;
 END //
 
 DELIMITER ;
@@ -262,9 +261,135 @@ DELIMITER //
 
 CREATE PROCEDURE deleteCustomerById(IN id_input INT)
 BEGIN
-DELETE
-FROM customer
-WHERE id = id_input;
+    DELETE
+    FROM customer
+    WHERE id = id_input;
 end //
+
+-- Procedure tìm kiếm khách hàng theo tên
+DELIMITER //
+
+CREATE PROCEDURE searchCustomerByName(IN keyword VARCHAR(100))
+BEGIN
+    SELECT *
+    FROM Customer
+    WHERE name LIKE CONCAT('%', keyword, '%');
+END //
+
+DELIMITER ;
+
+-- Procedure tìm kiếm sản phẩm theo tên
+DELIMITER //
+
+CREATE PROCEDURE searchProductByName(IN keyword VARCHAR(100))
+BEGIN
+    SELECT *
+    FROM Product
+    WHERE name LIKE CONCAT('%', keyword, '%');
+END //
+
+DELIMITER ;
+
+-- Procedure lấy danh sách hóa đơn (invoice)
+DELIMITER //
+
+CREATE PROCEDURE getAllInvoice()
+BEGIN
+    SELECT * FROM invoice;
+END //
+
+DELIMITER ;
+
+-- Procedure tạo moi hóa đơn
+DELIMITER //
+
+CREATE PROCEDURE addInvoice(
+    IN i_customer_id INT,
+    IN i_total_amount DECIMAL(12, 2),
+    OUT invoice_id INT
+)
+BEGIN
+    INSERT INTO invoice(customer_id, total_amout)
+    VALUES (i_customer_id, i_total_amount);
+
+    SET invoice_id = LAST_INSERT_ID();
+END //
+
+DELIMITER ;
+
+
+-- Procedure tạo chi tiết hóa đơn (invoice_detail)
+DELIMITER //
+
+CREATE PROCEDURE addInvoiceDetail(
+    IN i_invoice_id INT,
+    IN i_product_id INT,
+    IN i_quantity INT,
+    IN i_unit_price DECIMAL(12, 2)
+)
+BEGIN
+    INSERT INTO invoice_detail(invoice_id, product_id, quantity, unit_price)
+    VALUES (i_invoice_id, i_product_id, i_quantity, i_unit_price);
+END //
+
+DELIMITER ;
+
+-- Procedure cập nhật so lượng tồn kho
+DELIMITER //
+CREATE PROCEDURE updateProductStock(
+    IN p_id INT,
+    IN p_quantity INT
+)
+BEGIN
+    DECLARE current_stock INT;
+
+    -- lấy so lượng tồn kho hiện tại
+    SELECT stock
+    INTO current_stock
+    FROM product
+    WHERE id = p_id;
+
+    -- kiểm tra số lượng
+    IF current_stock IS NULL THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Sản phẩm không tồn tại';
+    ELSEIF current_stock < p_quantity THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Sản phẩm không đủ';
+    ELSE
+        -- tiến hành trừ số lượng tồn kho
+        UPDATE product
+        SET stock = stock - p_quantity
+        WHERE id = p_id;
+    END IF;
+
+END //
+DELIMITER ;
+
+-- Procedure tìm kiếm hóa đơn theo tên khách hàng
+DELIMITER //
+CREATE PROCEDURE searchInvoiceByCustomerName(IN c_name VARCHAR(100))
+BEGIN
+    SELECT i.id, c.name, i.create_at, i.total_amout
+    FROM invoice i
+             INNER JOIN customer c
+                        ON c.id = i.customer_id
+    WHERE c.name LIKE CONCAT('%', c_name, '%');
+END //
+DELIMITER ;
+
+-- Procedure tìm kiếm hóa đơn theo ngày tháng năm tạo
+DELIMITER //
+CREATE PROCEDURE searchInvoiceByDate(IN p_date DATE)
+BEGIN
+    SELECT i.id, c.name, i.create_at, i.total_amout
+    FROM invoice i
+             INNER JOIN customer c
+                        ON c.id = i.customer_id
+    WHERE DATE(i.create_at) = p_date;
+END //
+DELIMITER ;
+
+
 
 

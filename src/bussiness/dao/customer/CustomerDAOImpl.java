@@ -17,6 +17,7 @@ public class CustomerDAOImpl implements ICustomerDAO{
     private final String UPDATE = "{CALL updateCustomerById(?, ?, ?, ?, ?)}";
     private final String DELETE = "{CALL deleteCustomerById(?)}";
     private final String FINDBYID = "{CALL getCustomerById(?)}";
+    private final String FINDBYNAME = "{CALL searchCustomerByName(?)}";
     private static CustomerDAOImpl instance;
 
     public static CustomerDAOImpl getInstance() {
@@ -123,5 +124,14 @@ public class CustomerDAOImpl implements ICustomerDAO{
           return null;
       }
       return list.getFirst();
+    }
+
+    @Override
+    public List<Customer> findCustomerByName(String name) {
+        List<Customer> list = executeQueryWithParams(FINDBYNAME, name);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list;
     }
 }

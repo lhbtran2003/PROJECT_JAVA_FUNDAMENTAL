@@ -3,6 +3,8 @@ package bussiness.service.customer;
 import bussiness.service.IGenericService;
 import entity.Customer;
 
-public interface ICustomerService extends IGenericService<Customer, Integer> {
+import java.util.List;
 
+public interface ICustomerService extends IGenericService<Customer, Integer> {
+    List<Customer> getCustomerByName(String name);
 }

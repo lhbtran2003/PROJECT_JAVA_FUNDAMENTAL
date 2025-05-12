@@ -1,6 +1,6 @@
-package presentation;
+package presentation.auth;
 
-import bussiness.dao.AdminAuthenDAO;
+import bussiness.dao.auth.AdminAuthenDAO;
 import entity.Admin;
 
 import java.util.Scanner;

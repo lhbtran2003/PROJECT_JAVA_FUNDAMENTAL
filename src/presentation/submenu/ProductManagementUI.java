@@ -96,18 +96,8 @@ public class ProductManagementUI implements IGenericUI {
 
     private void getAllProductsInPresentation() {
         List<Product> products = productServiceImpl.getAll();
+        DisplayUIHelper.showProductList(products);
 
-        if (products.isEmpty()) {
-            System.out.println("Không có sản phẩm nào.");
-            return;
-        }
-        System.out.println("========== Danh Sách Sản Phẩm ==========");
-        for (Product product : products) {
-            System.out.println("ID: " + product.getId() + ", Name: " + product.getName() +
-                    ", Brand: " + product.getBrand() + ", Price: " + product.getPrice() +
-                    ", Stock: " + product.getStock());
-        }
-        System.out.println("========================================");
     }
 
     private void getProductsByBrandNameInPresentation(Scanner sc) {

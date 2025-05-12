@@ -30,6 +30,7 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public List<Customer> getAll() {
+
         return customerDAOImpl.findAll();
     }
 
@@ -46,5 +47,10 @@ public class CustomerServiceImpl implements ICustomerService {
     @Override
     public void deleteById(int id) {
         customerDAOImpl.deleteById(id);
+    }
+
+    @Override
+    public List<Customer> getCustomerByName(String name) {
+        return customerDAOImpl.findCustomerByName(name);
     }
 }
