@@ -28,8 +28,8 @@ public class InvoiceDAOImp implements IInvoiceDAO{
         return new InvoiceViewDTO(
                 rs.getInt("i.id"),
                 rs.getString("c.name"),
-                rs.getString("i.create_at"),
-                rs.getBigDecimal("i.total_amout")
+                rs.getString("i.created_at"),
+                rs.getBigDecimal("i.total_amount")
         );
     }
 
@@ -73,8 +73,8 @@ public class InvoiceDAOImp implements IInvoiceDAO{
                 Invoice invoice = new Invoice(
                         rs.getInt("id"),
                         rs.getInt("customer_id"),
-                        rs.getString("create_at"),
-                        rs.getBigDecimal("total_amout")
+                        rs.getString("created_at"),
+                        rs.getBigDecimal("total_amount")
                 );
                 list.add(invoice);
             }

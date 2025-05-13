@@ -309,7 +309,7 @@ CREATE PROCEDURE addInvoice(
     OUT invoice_id INT
 )
 BEGIN
-    INSERT INTO invoice(customer_id, total_amout)
+    INSERT INTO invoice(customer_id, total_amount)
     VALUES (i_customer_id, i_total_amount);
 
     SET invoice_id = LAST_INSERT_ID();
@@ -370,7 +370,7 @@ DELIMITER ;
 DELIMITER //
 CREATE PROCEDURE searchInvoiceByCustomerName(IN c_name VARCHAR(100))
 BEGIN
-    SELECT i.id, c.name, i.create_at, i.total_amout
+    SELECT i.id, c.name, i.created_at, i.total_amount
     FROM invoice i
              INNER JOIN customer c
                         ON c.id = i.customer_id
@@ -378,18 +378,57 @@ BEGIN
 END //
 DELIMITER ;
 
+
+
 -- Procedure tìm kiếm hóa đơn theo ngày tháng năm tạo
 DELIMITER //
 CREATE PROCEDURE searchInvoiceByDate(IN p_date DATE)
 BEGIN
-    SELECT i.id, c.name, i.create_at, i.total_amout
+    SELECT i.id, c.name, i.created_at, i.total_amount
     FROM invoice i
              INNER JOIN customer c
                         ON c.id = i.customer_id
-    WHERE DATE(i.create_at) = p_date;
+    WHERE DATE(i.created_at) = p_date;
+END //
+DELIMITER ;
+
+-- Procedure thống kê doanh thu theo ngày
+DELIMITER //
+CREATE PROCEDURE getTotalRevenueByDate (IN p_date DATE, OUT total DECIMAL(12,2))
+BEGIN
+   SELECT IFNULL(SUM(invoice.total_amount), 0) INTO total
+    FROM invoice
+        WHERE DATE(created_at) = p_date;
 END //
 DELIMITER ;
 
 
+-- Procedure thôg ke doanh thu theo tháng
+DELIMITER //
+CREATE PROCEDURE getTotalRevenueByMonth (
+    IN p_month INT,
+    IN p_year INT,
+    OUT total DECIMAL(12,2)
+)
+BEGIN
+    SELECT IFNULL(SUM(invoice.total_amount), 0)
+    INTO total
+    FROM invoice
+    WHERE MONTH(created_at) = p_month
+      AND YEAR(created_at) = p_year;
+END //
+DELIMITER ;
 
-
+-- Procedure thống kê doanh thu theo năm
+DELIMITER //
+CREATE PROCEDURE getTotalRevenueByYear (
+    IN p_year INT,
+    OUT total DECIMAL(12,2)
+)
+BEGIN
+    SELECT IFNULL(SUM(invoice.total_amount), 0)
+    INTO total
+    FROM invoice
+    WHERE Y(created_at) = p_year;
+END //
+DELIMITER ;
