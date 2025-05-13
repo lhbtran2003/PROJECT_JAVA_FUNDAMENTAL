@@ -5,6 +5,8 @@ import entity.Customer;
 import entity.Product;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
+import static utils.PrintUtils.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,20 +21,21 @@ public class CustomerManagementUI implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println("========== QUẢN LÍ KHÁCH HÀNG ==========");
+        System.out.println(WHITE_BOLD_BRIGHT +"========== QUẢN LÍ KHÁCH HÀNG ==========");
         System.out.println("1. Hiển thị danh sách khách hàng");
         System.out.println("2. Thêm khách hàng moi");
         System.out.println("3. Cập nhat thông tin khách hàng");
         System.out.println("4. Xóa khách hàng theo ID");
         System.out.println("5. Quay lại menu chính");
-        System.out.println("=========================================");
+        System.out.println("========================================="+RESET);
     }
+
 
     public void runCustomerUI() {
         Scanner sc = new Scanner(System.in);
         while (true) {
             showMenu();
-            System.out.print("Nhập lựa chọn: ");
+            System.out.print(YELLOW_BOLD_BRIGHT+ "❔ Nhập lựa chọn: "+RESET);
             byte choice = Byte.parseByte(sc.nextLine());
 
             switch (choice) {
@@ -52,14 +55,15 @@ public class CustomerManagementUI implements IGenericUI {
                     MainMenuAfterLogin.runMainMenu();
                     break;
                 default:
-                    System.out.println("Lựa chọn không hợp lệ. Vui lòng nhập lại");
+                    System.out.println(RED_BOLD_BRIGHT +"🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại"+ RESET);
                     break;
             }
         }
     }
 
+    // thêm mới khách hàng
     private void addMultipleInPresentation(Scanner sc) {
-        System.out.print("❔Nhập số lượng khách hàng bạn muốn thêm: ");
+        System.out.print(YELLOW_BOLD_BRIGHT+ "❔Nhập số lượng khách hàng bạn muốn thêm: ");
         int count = Integer.parseInt(sc.nextLine());
 
         List<Customer> customers = new ArrayList<>();
@@ -73,88 +77,90 @@ public class CustomerManagementUI implements IGenericUI {
             customer.setPhone(sc.nextLine());
             System.out.print("😗 Nhập email: ");
             customer.setEmail(sc.nextLine());
-            System.out.print("🤔 Nhập địa chỉ: ");
+            System.out.print("🤔 Nhập địa chỉ: " + RESET);
             customer.setAddress(sc.nextLine());
             customers.add(customer);
             System.out.println();
         }
-
         customerServiceImpl.addMultiple(customers);
     }
 
+    // hiển thị danh sách khách hàng
     private void getAllCustomerInPresentation() {
         List<Customer> customers = customerServiceImpl.getAll();
         DisplayUIHelper.showCustomerList(customers);
     }
 
+    // cập nhật thông tin khách hàng bao gồm: tên, sdt, email, địa chỉ
     private void updateCustomerInPresentation(Scanner sc) {
-        System.out.print("Nhập id của khách hàng muốn sửa: ");
+        System.out.print(YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn sửa: " +RESET);
         int id = Integer.parseInt(sc.nextLine());
 
         Customer customer = customerServiceImpl.getById(id);
         if (customer == null) {
-            System.out.println("❌ Không tìm thấy khách hàng có id = " + id);
+            System.out.println(RED_BOLD+ "❌ Không tìm thấy khách hàng có id = " + id+RESET);
             return;
         }
 
         while (true) {
-            System.out.println("Các thông tin có thể chỉnh sửa: ");
-            System.out.println("1🥗 Tên khách hàng");
+            System.out.println(CYAN_BOLD_BRIGHT + "Các thông tin có thể chỉnh sửa: " + RESET);
+            System.out.println(CYAN_BRIGHT +"1🥗 Tên khách hàng");
             System.out.println("2🍗 Số điện thoại");
             System.out.println("3🍜 Email");
             System.out.println("4🍶 Địa chỉ");
             System.out.println("5😎 Đã xong, thoát");
-            System.out.println("......................");
-            System.out.print("ヽ（≧□≦）ノ Bạn chon cái nào: ");
+            System.out.println("......................" + RESET);
+            System.out.print(YELLOW_BOLD_BRIGHT +"ヽ（≧□≦）ノ Bạn chon cái nào: " + RESET);
             byte choice = Byte.parseByte(sc.nextLine());
 
             switch (choice) {
                 case 1:
-                    System.out.print("Nhập tên mới cho sản phẩm này: ");
+                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập tên mới cho sản phẩm này: " + RESET);
                     customer.setName(sc.nextLine());
                     break;
                 case 2:
-                    System.out.print("Nhập số điện thoại mới cho khách hàng này: ");
+                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập số điện thoại mới cho khách hàng này: "+RESET);
                     customer.setPhone(sc.nextLine());
                     break;
                 case 3:
-                    System.out.print("Nhập email mới cho khách hàng này: ");
+                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập email mới cho khách hàng này: "+ RESET);
                     customer.setEmail(sc.nextLine());
                     break;
                 case 4:
-                    System.out.print("Nhập số địa chỉ mới cho khách hàng này: ");
+                    System.out.print(YELLOW_BOLD_BRIGHT+ "➡️ Nhập số địa chỉ mới cho khách hàng này: "+ RESET);
                     customer.setAddress(sc.nextLine());
                     break;
                 case 5:
-                    System.out.println("🎉 Đã hoàn thành việc chỉnh sửa khách hàng!");
+                    System.out.println(GREEN_BOLD_BRIGHT +"🎉 Đã hoàn thành việc chỉnh sửa khách hàng" + RESET);
                     customerServiceImpl.update(customer);
                     return;
                 default:
-                    System.out.println("Bấm lộn rồi bạn êyyyyy, chọn lại đi nhóe ^^");
+                    System.out.println(RED_BOLD_BRIGHT +"🆘 Bấm lộn rồi bạn êyyyyy, chọn lại đi nhóe ^^"+ RESET);
                     break;
             }
         }
     }
 
+    // xóa khách hàng theo id
     private void deleteCustomerInPresentation (Scanner sc) {
-        System.out.print("Nhập id của sản phẩm muốn xóa: ");
+        System.out.print(YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn xóa: "+ RESET);
         int id = Integer.parseInt(sc.nextLine());
 
         Customer customer = customerServiceImpl.getById(id);
         if (customer == null) {
-            System.out.println("❌ Không tìm thấy khách hàng có id = " + id);
+            System.out.println(RED_BOLD + "❌ Không tìm thấy khách hàng có id = " + id + RESET);
             return;
         }
-        System.out.print("🔆 Có khách hàng trong danh sách, bạn có muốn xóa không (có = 'y', không = 'n'): ");
+        System.out.print(PURPLE_BOLD_BRIGHT +"🔆 Có khách hàng trong danh sách, bạn có muốn xóa không (có = 'y', không = 'n'): " + RESET);
         String answer = sc.nextLine();
 
         if (answer.equals("y")) {
             customerServiceImpl.deleteById(id);
-            System.out.println("✅ Đã xóa khách hàng có id = " + id);
+            System.out.println(GREEN_BOLD_BRIGHT + "✅ Đã xóa khách hàng có id = " + id +RESET);
         } else if (answer.equals("n")) {
-            System.out.println("❎ Đã hủy thao tác xoa đối với khách hàng có id = "+id);
+            System.out.println(GREEN_BOLD_BRIGHT + "❎ Đã hủy thao tác xoa đối với khách hàng có id = "+id + RESET);
         } else {
-            System.out.println("😭Lựa chọn không hợp lệ, vui lòng thực hiện lại thao tác từ đầu.");
+            System.out.println(RED_BOLD_BRIGHT +"🆘 Lựa chọn không hợp lệ, vui lòng thực hiện lại thao tác từ đầu."+RESET);
         }
     }
 }

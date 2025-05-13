@@ -3,19 +3,20 @@ package presentation;
 import presentation.auth.AdminAuthenUI;
 
 import java.util.Scanner;
+import static utils.PrintUtils.*;
 
 public class PhoneStoreUI {
     private static void showMenu() {
-        System.out.println("==========HỆ THỐNG QUẢN LÍ CỬA HÀNG==========");
+        System.out.println(WHITE_BOLD_BRIGHT + "==========HỆ THỐNG QUẢN LÍ CỬA HÀNG==========");
         System.out.println("1. Đăng nhập Admin");
         System.out.println("2. Thoát");
-        System.out.println("=============================================");
+        System.out.println("=============================================" + RESET);
     }
 
     public static void main(String[] args) {
         while (true) {
             showMenu();
-            System.out.print("Nhập lựa chọn: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "Nhập lựa chọn: "+ RESET);
             byte choice = Byte.parseByte(new Scanner(System.in).nextLine());
 
             switch (choice) {
@@ -27,7 +28,7 @@ public class PhoneStoreUI {
                 case 2:
                     return;
                 default:
-                    System.out.println("Lựa chọn không có trong Menu của chúng tôi. Vui lòng nhập lại!");
+                    System.out.println(RED_BOLD + "🆘 Lựa chọn không có trong Menu của chúng tôi. Vui lòng nhập lại!" + RESET);
                     break;
             }
         }

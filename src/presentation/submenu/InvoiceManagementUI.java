@@ -5,13 +5,15 @@ import bussiness.dto.InvoiceDetailCreateDTO;
 import bussiness.dto.InvoiceViewDTO;
 import bussiness.service.customer.CustomerServiceImpl;
 import bussiness.service.invoice.InvoiceServiceImp;
-import bussiness.service.invoicedetail.InvoiceDetailServiceImp;
 import bussiness.service.product.ProductServiceImpl;
 import entity.Customer;
 import entity.Invoice;
 import entity.Product;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
+
+import static utils.PrintUtils.*;
+
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,33 +24,31 @@ public class InvoiceManagementUI implements IGenericUI {
     private final InvoiceServiceImp invoiceService;
     private final CustomerServiceImpl customerService;
     private final ProductServiceImpl productService;
-    private final InvoiceDetailServiceImp invoiceDetailService;
 
     public InvoiceManagementUI() {
         invoiceService = InvoiceServiceImp.getInstance();
         customerService = CustomerServiceImpl.getInstance();
         productService = ProductServiceImpl.getInstance();
-        invoiceDetailService = InvoiceDetailServiceImp.getInstance();
     }
 
     @Override
     public void showMenu() {
-        System.out.println("========== QUẢN LÍ HÓA ĐƠN ==========");
+        System.out.println(WHITE_BOLD_BRIGHT + "========== QUẢN LÍ HÓA ĐƠN ==========");
         System.out.println("1. Hiển thị danh sách hóa đơn");
         System.out.println("2. Thêm mới hóa đơn");
         System.out.println("3. Tìm kiếm hóa đơn");
-        System.out.println("4. Quay lại menu chính");
+        System.out.println("4. Quay lại menu chính" + RESET);
     }
 
     public void showMenuSearching() {
-        System.out.println("1. Tìm kiếm theo ten khách hàng");
+        System.out.println(WHITE_BOLD_BRIGHT + "1. Tìm kiếm theo ten khách hàng");
         System.out.println("2. Tìm kiếm theo ngày/tháng/năm");
-        System.out.println("3. Quay lại menu hóa đơn");
+        System.out.println("3. Quay lại menu hóa đơn" + RESET);
     }
 
     public void runMenuSearching(Scanner sc) {
         showMenuSearching();
-        System.out.print("===> Nhập lựa chọn tìm kiếm: ");
+        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập lựa chọn tìm kiếm: " + RESET);
         byte choice = Byte.parseByte(sc.nextLine());
         switch (choice) {
             case 1:
@@ -61,7 +61,7 @@ public class InvoiceManagementUI implements IGenericUI {
                 runInvoiceUI();
                 break;
             default:
-                System.out.println("Lựa chọn không hợp lệ");
+                System.out.println(RED_BOLD_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại." + RESET);
                 break;
         }
     }
@@ -71,7 +71,7 @@ public class InvoiceManagementUI implements IGenericUI {
         InvoiceManagementUI invoiceManagementUI = new InvoiceManagementUI();
         while (true) {
             invoiceManagementUI.showMenu();
-            System.out.print("Nhập lựa chọn: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập lựa chọn: " + RESET);
             byte choice = Byte.parseByte(sc.nextLine());
             switch (choice) {
                 case 1:
@@ -87,23 +87,24 @@ public class InvoiceManagementUI implements IGenericUI {
                     MainMenuAfterLogin.runMainMenu();
                     break;
                 default:
-                    System.out.println("Lựa chọn không hợp lệ");
+                    System.out.println(RED_BOLD_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhap lại" + RESET);
                     break;
             }
         }
     }
 
+    // hiển thị danh sách tất cả hóa đơn
     private void getAllInvoicesInPresentation() {
         List<Invoice> list = invoiceService.getAll();
         if (list.isEmpty()) {
-            System.out.println("Danh sách hóa đơn hiện trang trống!");
+            System.out.println(RED_BOLD + "🆘 Danh sách hóa đơn hiện trang trống!" + RESET);
             return;
         }
 
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
-        System.out.println("------------------------ Danh sách hóa đơn ---------------------------");
+        System.out.println(BLUE_BOLD_BRIGHT + "------------------------ Danh sách hóa đơn ---------------------------");
         System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", "ID", "Tên khách hàng", "Thời gian tạo", "Tổng tiền");
         for (Invoice invoice : list) {
 
@@ -113,23 +114,24 @@ public class InvoiceManagementUI implements IGenericUI {
 
             System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", invoice.getId(), customerName, formattedDate, invoice.getTotalAmount());
         }
-        System.out.println("--------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------" + RESET);
     }
 
+    // tim kiếm khách hàng theo tên, nếu ko có thì tạo mới luôn
     private int handleCustomerInput(Scanner sc) {
-        System.out.print("Nhập tên khách hàng: ");
+        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập tên khách hàng: " + RESET);
         String name = sc.nextLine();
         List<Customer> customerList = customerService.getCustomerByName(name);
 
         if (customerList == null || customerList.isEmpty()) {
-            System.out.println("Khách hàng chưa có trong danh sách, sẽ tiến hành tạo mới.");
+            System.out.println(RED_BOLD_BRIGHT + "🆘 Khách hàng chưa có trong danh sách, sẽ tiến hành tạo mới." + RESET);
             Customer newCustomer = new Customer();
             newCustomer.setName(name);
-            System.out.print("😋 Nhập số điện thoại: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "😋 Nhập số điện thoại: ");
             newCustomer.setPhone(sc.nextLine());
             System.out.print("😗 Nhập email: ");
             newCustomer.setEmail(sc.nextLine());
-            System.out.print("🤔 Nhập địa chỉ: ");
+            System.out.print("🤔 Nhập địa chỉ: " + RESET);
             newCustomer.setAddress(sc.nextLine());
 
             List<Customer> toAdd = new ArrayList<>();
@@ -139,32 +141,36 @@ public class InvoiceManagementUI implements IGenericUI {
             return customerService.getCustomerByName(name).getFirst().getId();
         } else {
             DisplayUIHelper.showCustomerList(customerList);
-            System.out.print("Nhập ID khách hàng muốn tạo hóa đơn: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập ID khách hàng muốn tạo hóa đơn: " + RESET);
             return Integer.parseInt(sc.nextLine());
         }
     }
 
 
+    // tìm kiếm spham theo tên, ko có sẽ hiện cảnh báo ko có
     private Map<Product, Integer> handleProductSelection(Scanner sc) {
         List<Product> productList = productService.getAll();
         DisplayUIHelper.showProductList(productList);
 
         Map<Product, Integer> selectedProducts = new HashMap<>();
         while (true) {
-            System.out.print("Nhập ID sản phẩm muốn mua (0 để dừng): ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập ID sản phẩm muốn mua (nhập số 0 để dừng): ");
             int id = Integer.parseInt(sc.nextLine());
-            if (id == 0) break;
+
+            if (id == 0) {
+                break;
+            }
 
             Product product = productService.getById(id);
             if (product == null) {
-                System.out.println("❌ Sản phẩm không tồn tại.");
+                System.out.println(RED_BOLD + "❌ Sản phẩm không tồn tại." + RESET);
                 continue;
             }
 
-            System.out.print("Nhập số lượng bạn muốn mua: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập số lượng bạn muốn mua: " + RESET);
             int quantity = Integer.parseInt(sc.nextLine());
             if (quantity > product.getStock()) {
-                System.out.println("⚠️ Số lượng tồn kho không đủ.");
+                System.out.println(RED_BRIGHT + "⚠️ Số lượng tồn kho không đủ.");
             } else {
                 if (selectedProducts.containsKey(product)) {
                     selectedProducts.put(product, selectedProducts.get(product) + quantity);
@@ -176,7 +182,7 @@ public class InvoiceManagementUI implements IGenericUI {
         return selectedProducts;
     }
 
-    // tính tổng giá
+    // tính tổng giá trị hoa đơn dựa trên số lượng spham và giá của mỗi spham
     private BigDecimal calculateTotalPrice(Map<Product, Integer> selectedProducts) {
         return BigDecimal.valueOf(selectedProducts.entrySet()
                 .stream()
@@ -184,6 +190,7 @@ public class InvoiceManagementUI implements IGenericUI {
                 .sum());
     }
 
+    // tạo mới hóa đơn
     private void createInvoiceInPresentation(Scanner sc) {
         int customerId = handleCustomerInput(sc);
 
@@ -212,8 +219,9 @@ public class InvoiceManagementUI implements IGenericUI {
         invoiceService.createInvoice(invoiceCreateDTO, detailList);
     }
 
+    // tìm kiếm hoa đơn theo tên khách hàng
     private void getInvoiceByCustomerName(Scanner sc) {
-        System.out.print("Nhập ten khách hàng cần tra cứu hóa đơn: ");
+        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập ten khách hàng cần tra cứu hóa đơn: " + RESET);
         String customerName = sc.nextLine();
 
         List<InvoiceViewDTO> listInvoiceSuitable = invoiceService.findByCustomerName(customerName);
@@ -223,44 +231,22 @@ public class InvoiceManagementUI implements IGenericUI {
             return;
         }
 
-        System.out.println("---------------------DANH SÁCH HÓA ĐƠN PHÙ HỢP -------------------------");
-        System.out.printf("| %-5s | %-20s | %-15s | %-20s |\n", "ID", "Tên khách hàng", "Tổng tiền", "Ngày tạo");
-        System.out.println("------------------------------------------------------------------------");
-
-        for (InvoiceViewDTO invoice : listInvoiceSuitable) {
-            System.out.printf("| %-5d | %-20s | %-15.2f | %-20s |\n",
-                    invoice.getId(),
-                    invoice.getCustomerName(),
-                    invoice.getTotalAmount(),
-                    invoice.getCreateAt()
-            );
-        }
-        System.out.println("------------------------------------------------------------------------");
+        DisplayUIHelper.showInvoiceList(listInvoiceSuitable);
     }
 
+    // tìm kiếm hoa đơn theo ngày tháng năm đầy đủ
     private void getInvoiceByDate(Scanner sc) {
-        System.out.print("Nhập ngày cần tra cứu hóa đơn (dd/MM/yyyy hoặc dd-MM-yyyy): ");
+        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập ngày cần tra cứu hóa đơn (dd/MM/yyyy hoặc dd-MM-yyyy): " + RESET);
         String inputDate = sc.nextLine();
 
         List<InvoiceViewDTO> invoices = invoiceService.findByDate(inputDate);
 
         if (invoices.isEmpty()) {
-            System.out.println("Không tìm thấy hóa đơn nào vào ngày " + inputDate);
+            System.out.println(RED_BOLD + "❌ Không tìm thấy hóa đơn nào vào ngày " + inputDate + RESET);
             return;
         }
 
-        System.out.println("---------------------DANH SÁCH HÓA ĐƠN PHÙ HỢP -------------------------");
-        System.out.printf("| %-5s | %-20s | %-15s | %-20s |\n", "ID", "Tên khách hàng", "Tổng tiền", "Ngày tạo");
-        System.out.println("------------------------------------------------------------------------");
-        for (InvoiceViewDTO invoice : invoices) {
-            System.out.printf("| %-5d | %-20s | %-15.2f | %-20s |\n",
-                    invoice.getId(),
-                    invoice.getCustomerName(),
-                    invoice.getTotalAmount(),
-                    invoice.getCreateAt()
-            );
-        }
-        System.out.println("------------------------------------------------------------------------");
+        DisplayUIHelper.showInvoiceList(invoices);
     }
 }
 

@@ -4,6 +4,8 @@ import presentation.submenu.CustomerManagementUI;
 import presentation.submenu.InvoiceManagementUI;
 import presentation.submenu.ProductManagementUI;
 import presentation.submenu.RevenueStatisticsUI;
+import static utils.PrintUtils.*;
+
 
 import java.util.Scanner;
 
@@ -15,13 +17,13 @@ public class MainMenuAfterLogin implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println("========== MENU CHÍNH ==========");
+        System.out.println(WHITE_BOLD_BRIGHT + "========== MENU CHÍNH ==========");
         System.out.println("1. Quản lí sản phẩm điện thoại");
         System.out.println("2. Quản lí khách hàng");
         System.out.println("3. Quản lí hóa đơn");
         System.out.println("4. Thống kê doanh thu");
         System.out.println("5. Đăng xuất");
-        System.out.println("================================");
+        System.out.println("================================" + RESET);
     }
 
     public static void runMainMenu() {
@@ -29,7 +31,7 @@ public class MainMenuAfterLogin implements IGenericUI {
         MainMenuAfterLogin mainMenu = new MainMenuAfterLogin();
         while (true) {
             mainMenu.showMenu();
-            System.out.print("Nhập lựa chọn: ");
+            System.out.print(YELLOW_BOLD_BRIGHT + "Nhập lựa chọn: "+ RESET);
             byte choice = Byte.parseByte(sc.nextLine());
 
             switch (choice) {
@@ -48,7 +50,7 @@ public class MainMenuAfterLogin implements IGenericUI {
                 case 5:
                     break;
                 default:
-                    System.out.println("Lựa chọn không hợp lệ");
+                    System.out.println(RED_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại" + RESET);
                     break;
 
             }

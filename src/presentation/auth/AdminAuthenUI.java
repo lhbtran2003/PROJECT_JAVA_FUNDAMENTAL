@@ -2,6 +2,8 @@ package presentation.auth;
 
 import bussiness.dao.auth.AdminAuthenDAO;
 import entity.Admin;
+import static utils.PrintUtils.*;
+
 
 import java.util.Scanner;
 
@@ -9,9 +11,9 @@ public class AdminAuthenUI {
 
     public static boolean adminRegister() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Nhập username: ");
+        System.out.print(YELLOW_BOLD_BRIGHT + "Nhập username: ");
         AdminAuthenDAO.setUsername(sc.nextLine());
-        System.out.print("Nhập mật khẩu: ");
+        System.out.print("Nhập mật khẩu: " + RESET);
         AdminAuthenDAO.setPassword(sc.nextLine());
 
         // xác thực tài khoan ở đây
@@ -21,7 +23,7 @@ public class AdminAuthenUI {
             displayInfoAdmin();
             return true;
         } else {
-            System.out.println("Tên tài khoản hoặc mật khẩu sai. Vui lòng nhap lại");
+            System.out.println(RED_BOLD + "🆘 Tên tài khoản hoặc mật khẩu sai. Vui lòng nhap lại" + RESET);
             return false;
         }
     }
@@ -30,9 +32,9 @@ public class AdminAuthenUI {
         String username = AdminAuthenDAO.getUsername();
         String password = AdminAuthenDAO.getPassword();
 
-        System.out.println("========== ĐĂNG NHẬP QUẢN TRỊ ==========");
+        System.out.println(BLUE_BOLD_BRIGHT +"========== ĐĂNG NHẬP QUẢN TRỊ ==========");
         System.out.println("Tài khoản: " + username);
         System.out.println("Mật khẩu: " + password);
-        System.out.println("========================================");
+        System.out.println("========================================" + RESET);
     }
 }
