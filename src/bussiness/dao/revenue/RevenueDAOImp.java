@@ -31,8 +31,7 @@ public class RevenueDAOImp implements IRevenueDAO{
             call.execute();
 
             // lấy gia trị đầu ra
-            BigDecimal revenue = call.getBigDecimal(2);
-            return revenue != null ? revenue : BigDecimal.ZERO; // nếu ko có thì trả về 0
+            return call.getBigDecimal(2); // csdl đã trả về 0 nếu ko có kết quả
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

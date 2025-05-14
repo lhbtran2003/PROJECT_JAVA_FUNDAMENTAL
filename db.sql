@@ -59,24 +59,18 @@ INSERT INTO admin (username, password)
 VALUES ('admin', '123');
 
 
--- Procedure lấy thông tin từ bảng admin
-DELIMITER
-//
-
+-- 1. Procedure lấy thông tin từ bảng admin
+DELIMITER //
 CREATE PROCEDURE GetAdminInfo(IN input_username VARCHAR(50))
 BEGIN
     SELECT id, username, password
     FROM Admin
     WHERE username = input_username;
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure thêm value vào product
-DELIMITER
-//
-
+-- 2. Procedure thêm value vào product
+DELIMITER //
 CREATE PROCEDURE AddProduct(
     IN p_name VARCHAR(100),
     IN p_brand VARCHAR(50),
@@ -86,56 +80,40 @@ CREATE PROCEDURE AddProduct(
 BEGIN
     INSERT INTO Product(name, brand, price, stock)
     VALUES (p_name, p_brand, p_price, p_stock);
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure lấy danh sách sản phẩm
-DELIMITER
-//
-
+-- 2. Procedure lấy danh sách sản phẩm
+DELIMITER //
 CREATE PROCEDURE getAllProduct()
 BEGIN
     SELECT *
     FROM Product;
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure tìm kiếm sản phẩm theo brand
-DELIMITER
-//
-
+-- 4. Procedure tìm kiếm sản phẩm theo brand
+DELIMITER //
 CREATE PROCEDURE searchProductsByBrand(IN brand_input VARCHAR(100))
 BEGIN
     SELECT *
     FROM product
     WHERE brand LIKE brand_input;
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure lấy spham theo id
-DELIMITER
-//
-
+-- 5. Procedure lấy spham theo id
+DELIMITER //
 CREATE PROCEDURE getProductById(IN id_input int)
 BEGIN
     SELECT *
     FROM product
     WHERE id = id_input;
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure cập nhật sản phẩm theo id
-DELIMITER
-//
-
+-- 6. Procedure cập nhật sản phẩm theo id
+DELIMITER //
 CREATE PROCEDURE updateProductById(
     IN p_id INT,
     IN p_name VARCHAR(100),
@@ -150,26 +128,21 @@ BEGIN
         price = p_price,
         stock = p_stock
     WHERE id = p_id;
-END
-//
-
+END //
 DELIMITER ;
 
--- Procedure xóa sản phẩm theo id
+-- 7. Procedure xóa sản phẩm theo id
 DELIMITER //
-
 CREATE PROCEDURE deleteProductById(IN id_input int)
 BEGIN
     DELETE
     FROM product
     WHERE id = id_input;
 END //
-
 DELIMITER ;
 
--- Procedure tìm kiếm điện thoại theo khoảng giá
+-- 8. Procedure tìm kiếm điện thoại theo khoảng giá
 DELIMITER //
-
 CREATE PROCEDURE searchProductByPrice(IN min_price int, IN max_price int)
 BEGIN
     SELECT *
@@ -177,51 +150,20 @@ BEGIN
     WHERE price >= min_price
       AND price <= max_price;
 END //
-
 DELIMITER ;
 
--- Procedure tìm kiếm sản phẩm theo tồn kho
+-- 9. Procedure tìm kiếm sản phẩm theo tồn kho
 DELIMITER //
-
 CREATE PROCEDURE searchProductByStock(IN min_stock int, IN max_stock int)
 BEGIN
     SELECT *
     FROM product
     WHERE stock BETWEEN min_stock AND max_stock;
 END //
-
 DELIMITER ;
 
--- Procedure thêm value vào customer
-DELIMITER
-//
-
-CREATE PROCEDURE AddCustomer(
-    IN c_name VARCHAR(100),
-    IN c_phone VARCHAR(20),
-    IN c_email VARCHAR(100),
-    IN c_address VARCHAR(255)
-)
-BEGIN
-    INSERT INTO customer(name, phone, email, address)
-    VALUES (c_name, c_phone, c_email, c_address);
-END
-//
-
-DELIMITER ;
-
--- Procedure lấy danh sách khách hàng
+-- 10. Procedure thêm value vào customer
 DELIMITER //
-
-CREATE PROCEDURE getAllCustomer()
-BEGIN
-    SELECT * FROM customer;
-end //
-DELIMITER ;
-
--- Procedure thêm mới khách hàng
-DELIMITER //
-
 CREATE PROCEDURE AddCustomer(
     IN c_name VARCHAR(100),
     IN c_phone VARCHAR(20),
@@ -232,12 +174,43 @@ BEGIN
     INSERT INTO customer(name, phone, email, address)
     VALUES (c_name, c_phone, c_email, c_address);
 END //
-
 DELIMITER ;
 
--- Procedure cập nhật thông tin khách hàng
+-- 11. Procedure lấy danh sách khách hàng
 DELIMITER //
+CREATE PROCEDURE getAllCustomer()
+BEGIN
+    SELECT * FROM customer;
+END //
+DELIMITER ;
 
+-- 11. Procedure thêm mới khách hàng
+DELIMITER //
+CREATE PROCEDURE AddCustomer(
+    IN c_name VARCHAR(100),
+    IN c_phone VARCHAR(20),
+    IN c_email VARCHAR(100),
+    IN c_address VARCHAR(255)
+)
+BEGIN
+    INSERT INTO customer(name, phone, email, address)
+    VALUES (c_name, c_phone, c_email, c_address);
+END //
+DELIMITER ;
+
+-- 12. Procedure lấy khách hàng theo id
+DELIMITER //
+CREATE PROCEDURE getCustomerById(IN id_input INT)
+BEGIN
+    SELECT *
+    FROM customer
+    WHERE id = id_input;
+END //
+DELIMITER ;
+
+
+-- 13. Procedure cập nhật thông tin khách hàng
+DELIMITER //
 CREATE PROCEDURE updateCustomerById(
     IN c_id INT,
     IN c_name VARCHAR(100),
@@ -253,56 +226,48 @@ BEGIN
         address = c_address
     WHERE id = c_id;
 END //
-
 DELIMITER ;
 
--- Procedure xóa khách hàng theo id
+-- 14. Procedure xóa khách hàng theo id
 DELIMITER //
-
 CREATE PROCEDURE deleteCustomerById(IN id_input INT)
 BEGIN
     DELETE
     FROM customer
     WHERE id = id_input;
-end //
+END //
+DELIMITER ;
 
--- Procedure tìm kiếm khách hàng theo tên
+-- 15. Procedure tìm kiếm khách hàng theo tên
 DELIMITER //
-
 CREATE PROCEDURE searchCustomerByName(IN keyword VARCHAR(100))
 BEGIN
     SELECT *
     FROM Customer
     WHERE name LIKE CONCAT('%', keyword, '%');
 END //
-
 DELIMITER ;
 
--- Procedure tìm kiếm sản phẩm theo tên
+-- 16. Procedure tìm kiếm sản phẩm theo tên
 DELIMITER //
-
 CREATE PROCEDURE searchProductByName(IN keyword VARCHAR(100))
 BEGIN
     SELECT *
     FROM Product
     WHERE name LIKE CONCAT('%', keyword, '%');
 END //
-
 DELIMITER ;
 
--- Procedure lấy danh sách hóa đơn (invoice)
+-- 17. Procedure lấy danh sách hóa đơn (invoice)
 DELIMITER //
-
 CREATE PROCEDURE getAllInvoice()
 BEGIN
     SELECT * FROM invoice;
 END //
-
 DELIMITER ;
 
--- Procedure tạo moi hóa đơn
+-- 18. Procedure tạo moi hóa đơn
 DELIMITER //
-
 CREATE PROCEDURE addInvoice(
     IN i_customer_id INT,
     IN i_total_amount DECIMAL(12, 2),
@@ -314,13 +279,11 @@ BEGIN
 
     SET invoice_id = LAST_INSERT_ID();
 END //
-
 DELIMITER ;
 
 
--- Procedure tạo chi tiết hóa đơn (invoice_detail)
+-- 19. Procedure tạo chi tiết hóa đơn (invoice_detail)
 DELIMITER //
-
 CREATE PROCEDURE addInvoiceDetail(
     IN i_invoice_id INT,
     IN i_product_id INT,
@@ -331,10 +294,9 @@ BEGIN
     INSERT INTO invoice_detail(invoice_id, product_id, quantity, unit_price)
     VALUES (i_invoice_id, i_product_id, i_quantity, i_unit_price);
 END //
-
 DELIMITER ;
 
--- Procedure cập nhật so lượng tồn kho
+-- 20. Procedure cập nhật so lượng tồn kho
 DELIMITER //
 CREATE PROCEDURE updateProductStock(
     IN p_id INT,
@@ -366,7 +328,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Procedure tìm kiếm hóa đơn theo tên khách hàng
+-- 21. Procedure tìm kiếm hóa đơn theo tên khách hàng
 DELIMITER //
 CREATE PROCEDURE searchInvoiceByCustomerName(IN c_name VARCHAR(100))
 BEGIN
@@ -380,7 +342,7 @@ DELIMITER ;
 
 
 
--- Procedure tìm kiếm hóa đơn theo ngày tháng năm tạo
+-- 22. Procedure tìm kiếm hóa đơn theo ngày tháng năm tạo
 DELIMITER //
 CREATE PROCEDURE searchInvoiceByDate(IN p_date DATE)
 BEGIN
@@ -392,7 +354,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Procedure thống kê doanh thu theo ngày
+-- 23. Procedure thống kê doanh thu theo ngày
 DELIMITER //
 CREATE PROCEDURE getTotalRevenueByDate (IN p_date DATE, OUT total DECIMAL(12,2))
 BEGIN
@@ -403,7 +365,7 @@ END //
 DELIMITER ;
 
 
--- Procedure thôg ke doanh thu theo tháng
+-- 24. Procedure thôg ke doanh thu theo tháng
 DELIMITER //
 CREATE PROCEDURE getTotalRevenueByMonth (
     IN p_month INT,
@@ -419,7 +381,7 @@ BEGIN
 END //
 DELIMITER ;
 
--- Procedure thống kê doanh thu theo năm
+-- 25. Procedure thống kê doanh thu theo năm
 DELIMITER //
 CREATE PROCEDURE getTotalRevenueByYear (
     IN p_year INT,
