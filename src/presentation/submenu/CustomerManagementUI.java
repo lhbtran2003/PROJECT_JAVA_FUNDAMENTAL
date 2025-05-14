@@ -2,7 +2,6 @@ package presentation.submenu;
 
 import bussiness.service.customer.CustomerServiceImpl;
 import entity.Customer;
-import entity.Product;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
 import static utils.PrintUtils.*;

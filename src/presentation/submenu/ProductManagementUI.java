@@ -1,6 +1,5 @@
 package presentation.submenu;
 
-import bussiness.service.product.IProductService;
 import bussiness.service.product.ProductServiceImpl;
 import entity.Product;
 import presentation.IGenericUI;

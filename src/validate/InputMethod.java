@@ -58,28 +58,6 @@ public class InputMethod {
             }
         }
     }
-
-    public static boolean inputBoolean (Scanner sc, String title) {
-        while (true) {
-            System.out.print(title + ": ");
-            String input = sc.nextLine();
-            if (input.equalsIgnoreCase("nam") || input.equalsIgnoreCase("nữ")) {
-                return input.equalsIgnoreCase("nam");
-            }
-        }
-    }
-
-    private String validateEmail(Scanner sc) {
-        String email;
-        while (true) {
-            System.out.print("😗 Nhập email: ");
-            email = sc.nextLine().trim();
-            if (email.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
-                break;
-            }
-            System.out.println(RED_BOLD_BRIGHT + ERROR_EMAIL + RESET);
-        }
-        return email;
-    }
+    
 
 }
