@@ -1,7 +1,7 @@
 package validate;
 
 import java.util.Scanner;
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 
 
 public class InputMethod {
@@ -34,6 +34,7 @@ public class InputMethod {
                 int value = Integer.parseInt(input);
                 if (value < 0) {
                     System.out.println(RED_BOLD_BRIGHT + ERROR_INTERGER_POSITIVE + RESET);
+                    continue;
                 }
                 return Integer.parseInt(input);
             } catch (NumberFormatException e) {
@@ -51,6 +52,7 @@ public class InputMethod {
                 double value = Double.parseDouble(input);
                 if (value < 0) {
                     System.out.println(RED_BOLD_BRIGHT + ERROR_DOUBLE_POSTITIVE + RESET);
+                    continue;
                 }
                 return value;
             } catch (NumberFormatException e) {
@@ -58,6 +60,10 @@ public class InputMethod {
             }
         }
     }
-    
+
+    public static void pressAndKey() {
+        System.out.println("Hãy bấm vào một phím bất kì để tiếp tục...");
+        new Scanner(System.in).nextLine();
+    }
 
 }

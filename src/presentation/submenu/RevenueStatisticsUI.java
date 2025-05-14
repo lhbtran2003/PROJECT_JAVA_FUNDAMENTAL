@@ -3,7 +3,7 @@ package presentation.submenu;
 import bussiness.service.revenue.RevenueServiceImp;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 import static validate.InvoiceValidator.*;
 import static validate.RevenueValidator.*;
 

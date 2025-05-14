@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface IGenericService<T,E> extends IBasicService<T> {
     void update (T t);
-    T getById(int id);
+    T getById(E id);
     void deleteById(int id);
 }

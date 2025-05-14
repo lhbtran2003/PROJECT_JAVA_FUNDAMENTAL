@@ -6,6 +6,7 @@ import bussiness.dao.product.ProductDAOImp;
 import bussiness.dto.invoice.InvoiceCreateDTO;
 import bussiness.dto.invoicedetail.InvoiceDetailCreateDTO;
 import bussiness.dto.invoice.InvoiceViewDTO;
+import bussiness.service.product.ProductServiceImpl;
 import entity.Invoice;
 
 import java.time.LocalDate;
@@ -18,11 +19,13 @@ public class InvoiceServiceImp implements IInvoiceService {
     private static InvoiceServiceImp invoiceServiceImp;
     private final InvoiceDetailDAOImp invoiceDetailDAOImp;
     private final ProductDAOImp productDAOImp;
+    private final ProductServiceImpl productServiceImpl;
 
     public InvoiceServiceImp() {
         invoiceDAOImp = InvoiceDAOImp.getInstance();
         invoiceDetailDAOImp = InvoiceDetailDAOImp.getInstance();
         productDAOImp = ProductDAOImp.getInstance();
+        productServiceImpl = ProductServiceImpl.getInstance();
     }
 
     public static InvoiceServiceImp getInstance() {
@@ -40,7 +43,7 @@ public class InvoiceServiceImp implements IInvoiceService {
             invoiceDetailDAOImp.save(detail);  // lưu chi tiết
 
             // Trừ số lượng tồn kho
-            productDAOImp.updateStock(detail.getProductId(), detail.getQuantity());
+            productServiceImpl.updateProductStock(detail.getProductId(), detail.getQuantity());
         }
     }
 

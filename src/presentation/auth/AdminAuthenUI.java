@@ -4,7 +4,7 @@ import bussiness.dao.auth.AdminAuthenDAO;
 import entity.Admin;
 import static validate.InputMethod.*;
 
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 
 
 import java.util.Scanner;
@@ -32,9 +32,9 @@ public class AdminAuthenUI {
         String username = AdminAuthenDAO.getUsername();
         String password = AdminAuthenDAO.getPassword();
 
-        System.out.println(BLUE_BOLD_BRIGHT +"========== ĐĂNG NHẬP QUẢN TRỊ ==========");
-        System.out.println("Tài khoản: " + username);
-        System.out.println("Mật khẩu: " + password);
-        System.out.println("========================================" + RESET);
+        System.out.println(BLUE_BOLD_BRIGHT +"|========== ĐĂNG NHẬP QUẢN TRỊ ==========|");
+        System.out.println("|Tài khoản: " + username);
+        System.out.println("|Mật khẩu: " + password);
+        System.out.println("|========================================|" + RESET);
     }
 }

@@ -4,7 +4,7 @@ import bussiness.service.customer.CustomerServiceImpl;
 
 import java.util.Scanner;
 
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 
 
 public class CustomerValidator extends InputMethod {

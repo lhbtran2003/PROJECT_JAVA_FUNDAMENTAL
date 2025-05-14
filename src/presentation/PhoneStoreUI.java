@@ -3,7 +3,7 @@ package presentation;
 import presentation.auth.AdminAuthenUI;
 
 import java.util.Scanner;
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 
 public class PhoneStoreUI {
     private static void showMenu() {

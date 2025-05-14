@@ -40,7 +40,7 @@ public class CustomerServiceImpl implements ICustomerService {
     }
 
     @Override
-    public Customer getById(int id) {
+    public Customer getById(Integer id) {
         return customerDAOImpl.findById(id);
     }
 

@@ -4,7 +4,7 @@ import presentation.submenu.CustomerManagementUI;
 import presentation.submenu.InvoiceManagementUI;
 import presentation.submenu.ProductManagementUI;
 import presentation.submenu.RevenueStatisticsUI;
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 
 
 import java.util.Scanner;

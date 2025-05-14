@@ -4,7 +4,7 @@ import bussiness.service.customer.CustomerServiceImpl;
 import entity.Customer;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
 import static validate.InputMethod.*;
 import static validate.CustomerValidator.*;
 
@@ -60,6 +60,7 @@ public class CustomerManagementUI implements IGenericUI {
                     System.out.println(RED_BOLD_BRIGHT +"🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại"+ RESET);
                     break;
             }
+            pressAndKey();
         }
     }
 
@@ -116,21 +117,27 @@ public class CustomerManagementUI implements IGenericUI {
 
             switch (choice) {
                 case 1:
+                    System.out.println(BLUE_BRIGHT+"Tên cũ: "+ customer.getName() + RESET);
                     customer.setName(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT +"➡️ Nhập tên mới cho khách hàng này: " + RESET));
                     break;
                 case 2:
-                    // cái này phải chỉnh validate sdt lại
+                    System.out.println(BLUE_BRIGHT+"Số điện thoại cũ: "+ customer.getPhone() + RESET);
                     customer.setPhone(validatePhoneNumber(sc, YELLOW_BOLD_BRIGHT+"➡️ Nhập số điện thoại mới cho khách hàng này: " + RESET, customerServiceImpl));
                     break;
                 case 3:
+                    System.out.println(BLUE_BRIGHT+"Email cũ: "+ customer.getEmail() + RESET);
                     customer.setEmail(validateEmail(sc, YELLOW_BOLD_BRIGHT +"➡️ Nhập email mới cho khách hàng này: "+ RESET, customerServiceImpl));
                     break;
                 case 4:
+                    System.out.println(BLUE_BRIGHT+"Địa chỉ cũ: "+ customer.getName() + RESET);
                     customer.setAddress(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT+ "➡️ Nhập số địa chỉ mới cho khách hàng này: " + RESET));
                     break;
                 case 5:
                     System.out.println(GREEN_BOLD_BRIGHT +"🎉 Đã hoàn thành việc chỉnh sửa khách hàng" + RESET);
                     customerServiceImpl.update(customer);
+                    return;
+                case 6:
+                    System.out.println(GREEN_BOLD_BRIGHT+ "Đã hủy các thao tác thay đổi thông tin khách hàng"+ RESET);
                     return;
                 default:
                     System.out.println(RED_BOLD_BRIGHT +"🆘 Bấm lộn rồi bạn êyyyyy, chọn lại đi nhóe ^^"+ RESET);

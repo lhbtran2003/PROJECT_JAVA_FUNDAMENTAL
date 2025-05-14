@@ -15,13 +15,12 @@ import static validate.InputMethod.*;
 import static validate.InvoiceValidator.*;
 
 
-import static utils.PrintUtils.*;
+import static utils.ColorUtils.*;
+import static utils.DateTimeFormatterUtils.*;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class InvoiceManagementUI implements IGenericUI {
@@ -105,21 +104,19 @@ public class InvoiceManagementUI implements IGenericUI {
             return;
         }
 
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
         System.out.println(BLUE_BOLD_BRIGHT + "------------------------ Danh sách hóa đơn ---------------------------");
         System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", "ID", "Tên khách hàng", "Thời gian tạo", "Tổng tiền");
         for (Invoice invoice : list) {
 
             String customerName = customerService.getById(invoice.getCustomerId()).getName();
-            LocalDateTime dateTime = LocalDateTime.parse(invoice.getCreateAt(), inputFormatter);
-            String formattedDate = dateTime.format(outputFormatter);
+            String formattedDate = formatDateTime(invoice.getCreateAt());
 
             System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", invoice.getId(), customerName, formattedDate, invoice.getTotalAmount());
         }
         System.out.println("--------------------------------------------------------------------" + RESET);
     }
+
 
     // tim kiếm khách hàng theo tên, nếu ko có thì tạo mới luôn
     private int handleCustomerInput(Scanner sc) {
