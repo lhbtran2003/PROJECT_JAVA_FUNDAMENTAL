@@ -3,9 +3,13 @@ package presentation.submenu;
 import bussiness.service.revenue.RevenueServiceImp;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
+import validate.InputMethod;
+
 import static utils.ColorUtils.*;
+import static utils.CurrencyFormatterUtils.*;
 import static validate.InvoiceValidator.*;
 import static validate.RevenueValidator.*;
+import static validate.InputMethod.*;
 
 
 import java.math.BigDecimal;
@@ -20,11 +24,12 @@ public class RevenueStatisticsUI implements IGenericUI {
     }
     @Override
     public void showMenu() {
-        System.out.println(WHITE_BOLD_BRIGHT +"========== THỐNG KÊ DOANH THU ==========");
-        System.out.println("1. Doanh thu theo ngày");
-        System.out.println("2. Doanh thu theo tháng");
-        System.out.println("3. Doanh thu theo năm");
-        System.out.println("4. Quay lại menu chính" + RESET);
+        System.out.println(WHITE_BOLD_BRIGHT+"========== THỐNG KÊ DOANH THU ==========");
+        System.out.println("| 1. Doanh thu theo ngày                |");
+        System.out.println("| 2. Doanh thu theo tháng               |");
+        System.out.println("| 3. Doanh thu theo năm                 |");
+        System.out.println("| 4. Quay lại menu chính                |");
+        System.out.println("=========================================" + RESET);
     }
 
     public void runRevenueStatisticsUI() {
@@ -51,6 +56,7 @@ public class RevenueStatisticsUI implements IGenericUI {
                     System.out.println(RED_BOLD_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại" + RESET);
                     break;
             }
+            pressAndKey();
         }
     }
 
@@ -68,7 +74,8 @@ public class RevenueStatisticsUI implements IGenericUI {
         if (totalRevenue.compareTo(BigDecimal.ZERO) == 0) {
             System.out.println(RED_BOLD + "❌ Không có doanh thu trong ngày này hoặc ngày không hợp lệ."+ RESET);
         } else {
-            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu ngày %s là: %,.2f VNĐ\n", date, totalRevenue + RESET);
+            String formattedCurrency = formatCurrency(totalRevenue);
+            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu ngày %s là: %s \n", date, formattedCurrency + RESET);
         }
 
     }
@@ -76,22 +83,29 @@ public class RevenueStatisticsUI implements IGenericUI {
     private void getTotalByMonthInPresentation (Scanner sc) {
         String monthInput = validateMonthInput(sc, YELLOW_BOLD_BRIGHT + "❔ Nhập tháng cần tra cứu: ");
         int month = Integer.parseInt(monthInput);
-        int year = validateIntInput(sc, "❔ Nhập năm cần tra cứu: "+RESET);
+        int year = validateIntInput(sc, "❔ Nhập năm cần tra cứu: " + RESET);
 
         BigDecimal totalVenue = revenueServiceImp.getTotalRevenueByMonth(month, year);
-
-        System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của tháng %s/%d là %,.2f VNĐ", monthInput, year, totalVenue + RESET);
+        if (totalVenue.compareTo(BigDecimal.ZERO) == 0) {
+            System.out.println(RED_BOLD + "❌ Không có doanh thu trong tháng này hoặc tháng không hợp lệ." + RESET);
+        } else {
+            String formattedCurrency = formatCurrency(totalVenue);
+            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của tháng %s/%d là %s\n", monthInput, year, formattedCurrency + RESET);
+        }
     }
 
 
     private void getTotalByYearInPresentation (Scanner sc) {
-        System.out.print(YELLOW_BACKGROUND +"❔Nhập năm cần tra cứu: " + RESET);
-        String yearInput = sc.nextLine();
-        int year = Integer.parseInt(yearInput);
+        int yearInput = validateIntInput(sc, YELLOW_BOLD_BRIGHT + "❔Nhập năm cần tra cứu: " + RESET);
 
-        BigDecimal totalVenue = revenueServiceImp.getTotalRevenueByYear(year);
+        BigDecimal totalVenue = revenueServiceImp.getTotalRevenueByYear(yearInput);
 
-        System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của năm %s là %,.2f VNĐ", yearInput, totalVenue + RESET);
+        if (totalVenue.compareTo(BigDecimal.ZERO) == 0) {
+            System.out.println(RED_BOLD + "❌ Không có doanh thu trong năm này hoặc năm không hợp lệ." + RESET);
+        } else {
+            String formattedCurrency = formatCurrency(totalVenue);
+            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của năm %d là %s\n", yearInput, formattedCurrency + RESET);
+        }
     }
 }
 

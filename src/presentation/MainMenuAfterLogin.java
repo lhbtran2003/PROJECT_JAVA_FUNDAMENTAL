@@ -5,6 +5,8 @@ import presentation.submenu.InvoiceManagementUI;
 import presentation.submenu.ProductManagementUI;
 import presentation.submenu.RevenueStatisticsUI;
 import static utils.ColorUtils.*;
+import static validate.InputMethod.*;
+
 
 
 import java.util.Scanner;
@@ -17,13 +19,13 @@ public class MainMenuAfterLogin implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println(WHITE_BOLD_BRIGHT + "========== MENU CHÍNH ==========");
-        System.out.println("1. Quản lí sản phẩm điện thoại");
-        System.out.println("2. Quản lí khách hàng");
-        System.out.println("3. Quản lí hóa đơn");
-        System.out.println("4. Thống kê doanh thu");
-        System.out.println("5. Đăng xuất");
-        System.out.println("================================" + RESET);
+        System.out.println(WHITE_BOLD_BRIGHT + "|========= MENU CHÍNH =========|");
+        System.out.println("|1. Quản lí sản phẩm điện thoại|");
+        System.out.println("|2. Quản lí khách hàng         |");
+        System.out.println("|3. Quản lí hóa đơn            |");
+        System.out.println("|4. Thống kê doanh thu         |");
+        System.out.println("|5. Đăng xuất                  |");
+        System.out.println("|==============================|" + RESET);
     }
 
     public static void runMainMenu() {

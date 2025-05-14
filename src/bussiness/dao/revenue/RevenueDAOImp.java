@@ -10,7 +10,7 @@ import java.time.Year;
 public class RevenueDAOImp implements IRevenueDAO{
     private final String GETBYDATE = "{CALL getTotalReVenueByDate(?, ?)}";
     private final String GETBYMONTH = "{CALL getTotalReVenueByMonth(?, ?, ?)}";
-    private final String GETBYYEAR = "{CALL getTotalReVenueByYear(?, ?, ?)}";
+    private final String GETBYYEAR = "{CALL getTotalRevenueByYear(?, ?)}";
     private static RevenueDAOImp instance;
 
     public static RevenueDAOImp getInstance() {
@@ -25,7 +25,7 @@ public class RevenueDAOImp implements IRevenueDAO{
 
         Connection conn = DBConnection.getConnection();
         try {
-            CallableStatement call = conn.prepareCall(GETBYMONTH);
+            CallableStatement call = conn.prepareCall(GETBYYEAR);
             call.setInt(1, year);
             call.registerOutParameter(2, Types.DECIMAL);
             call.execute();
@@ -42,7 +42,7 @@ public class RevenueDAOImp implements IRevenueDAO{
     public BigDecimal getTotalRevenueByMonth(int month, int year) {
         Connection conn = DBConnection.getConnection();
         try {
-            CallableStatement call = conn.prepareCall(GETBYMONTH);
+            CallableStatement call = conn.prepareCall(GETBYYEAR);
             call.setInt(1, month);
             call.setInt(2, year);
             call.registerOutParameter(3, Types.DECIMAL);

@@ -391,6 +391,10 @@ BEGIN
     SELECT IFNULL(SUM(invoice.total_amount), 0)
     INTO total
     FROM invoice
-    WHERE Y(created_at) = p_year;
+    WHERE YEAR(created_at) = p_year;
 END //
 DELIMITER ;
+
+
+
+

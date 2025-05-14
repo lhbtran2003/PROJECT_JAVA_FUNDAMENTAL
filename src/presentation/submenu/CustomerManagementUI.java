@@ -23,13 +23,13 @@ public class CustomerManagementUI implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println(WHITE_BOLD_BRIGHT +"========== QUẢN LÍ KHÁCH HÀNG ==========");
-        System.out.println("1. Hiển thị danh sách khách hàng");
-        System.out.println("2. Thêm khách hàng moi");
-        System.out.println("3. Cập nhat thông tin khách hàng");
-        System.out.println("4. Xóa khách hàng theo ID");
-        System.out.println("5. Quay lại menu chính");
-        System.out.println("========================================="+RESET);
+        System.out.println(WHITE_BOLD_BRIGHT +"|========== QUẢN LÍ KHÁCH HÀNG ==========|");
+        System.out.println("|1. Hiển thị danh sách khách hàng        |");
+        System.out.println("|2. Thêm khách hàng moi                  |");
+        System.out.println("|3. Cập nhat thông tin khách hàng        |");
+        System.out.println("|4. Xóa khách hàng theo ID               |");
+        System.out.println("|5. Quay lại menu chính                  |");
+        System.out.println("|========================================|"+RESET);
     }
 
 
@@ -111,6 +111,7 @@ public class CustomerManagementUI implements IGenericUI {
             System.out.println("3🍜 Email");
             System.out.println("4🍶 Địa chỉ");
             System.out.println("5😎 Đã xong, thoát");
+            System.out.println("6😭 Hủy thay đổi");
             System.out.println("......................" + RESET);
             System.out.print(YELLOW_BOLD_BRIGHT +"ヽ（≧□≦）ノ Bạn chon cái nào: ");
             byte choice = Byte.parseByte(sc.nextLine());

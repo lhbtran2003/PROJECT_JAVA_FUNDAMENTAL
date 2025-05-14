@@ -23,16 +23,16 @@ public class ProductManagementUI implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println(WHITE_BOLD_BRIGHT + "========== QUẢN LÍ ĐIỆN THOẠI ==========");
-        System.out.println("1. Hiển thị danh sách sản phẩm");
-        System.out.println("2. Thêm sản phẩm mới");
-        System.out.println("3. Cập nhật thông tin sản phẩm");
-        System.out.println("4. Xóa sản phẩm theo ID");
-        System.out.println("5. Tìm kiếm theo brand");
-        System.out.println("6. Tìm kiếm theo khoảng giá");
-        System.out.println("7. Tìm kiếm theo tồn kho");
-        System.out.println("8. Quay lại menu chính");
-        System.out.println("=========================================" + RESET);
+        System.out.println(WHITE_BOLD_BRIGHT + "|========== QUẢN LÍ ĐIỆN THOẠI ==========|");
+        System.out.println("| 1. Hiển thị danh sách sản phẩm         |");
+        System.out.println("| 2. Thêm sản phẩm mới                   |");
+        System.out.println("| 3. Cập nhật thông tin sản phẩm         |");
+        System.out.println("| 4. Xóa sản phẩm theo ID                |");
+        System.out.println("| 5. Tìm kiếm theo brand                 |");
+        System.out.println("| 6. Tìm kiếm theo khoảng giá            |");
+        System.out.println("| 7. Tìm kiếm theo tồn kho               |");
+        System.out.println("| 8. Quay lại menu chính                 |");
+        System.out.println("|========================================|" + RESET);
     }
 
     public void runPhoneManagement() {

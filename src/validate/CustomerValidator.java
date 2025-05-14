@@ -48,7 +48,7 @@ public class CustomerValidator extends InputMethod {
             // Phải có dấu @
             // 	Tên miền chứa ký tự, số, dấu -, dấu .
             // 	Đuôi miền (VD: .com, .vn, .edu) từ 2 ký tự trở lên
-            if (input.matches("^(?![.-])[A-Za-z0-9._%+-]+(?<![.-])@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$\n")) {
+            if (input.matches("^(?![.-])[A-Za-z0-9._%+-]+(?<![.-])@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*\\.[A-Za-z]{2,}$")) {
                 return input;
             }
             System.out.println(RED_BOLD_BRIGHT + ERROR_EMAIL + RESET);

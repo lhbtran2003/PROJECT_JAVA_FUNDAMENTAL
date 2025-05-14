@@ -17,9 +17,11 @@ import static validate.InvoiceValidator.*;
 
 import static utils.ColorUtils.*;
 import static utils.DateTimeFormatterUtils.*;
+import static utils.CurrencyFormatterUtils.*;
 
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -36,17 +38,20 @@ public class InvoiceManagementUI implements IGenericUI {
 
     @Override
     public void showMenu() {
-        System.out.println(WHITE_BOLD_BRIGHT + "========== QUẢN LÍ HÓA ĐƠN ==========");
-        System.out.println("1. Hiển thị danh sách hóa đơn");
-        System.out.println("2. Thêm mới hóa đơn");
-        System.out.println("3. Tìm kiếm hóa đơn");
-        System.out.println("4. Quay lại menu chính" + RESET);
+        System.out.println(WHITE_BOLD_BRIGHT +"|========== QUẢN LÍ HÓA ĐƠN ==========|");
+        System.out.println("| 1. Hiển thị danh sách hóa đơn       |");
+        System.out.println("| 2. Thêm mới hóa đơn                 |");
+        System.out.println("| 3. Tìm kiếm hóa đơn                 |");
+        System.out.println("| 4. Quay lại menu chính              |" + RESET);
+        System.out.println("|=====================================|");
     }
 
     public void showMenuSearching() {
-        System.out.println(WHITE_BOLD_BRIGHT + "1. Tìm kiếm theo ten khách hàng");
-        System.out.println("2. Tìm kiếm theo ngày/tháng/năm");
-        System.out.println("3. Quay lại menu hóa đơn" + RESET);
+        System.out.println(WHITE_BOLD_BRIGHT +"|========== MENU TÌM KIẾM HÓA ĐƠN ==========|");
+        System.out.println("|1. Tìm kiếm theo ten khách hàng            |");
+        System.out.println("|2. Tìm kiếm theo ngày/tháng/năm            |");
+        System.out.println("|3. Quay lại menu hóa đơn                   |");
+        System.out.println("|===========================================|"+ RESET);
     }
 
     public void runMenuSearching(Scanner sc) {
@@ -67,6 +72,7 @@ public class InvoiceManagementUI implements IGenericUI {
                 System.out.println(RED_BOLD_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhập lại." + RESET);
                 break;
         }
+        pressAndKey();
     }
 
     public void runInvoiceUI() {
@@ -93,6 +99,8 @@ public class InvoiceManagementUI implements IGenericUI {
                     System.out.println(RED_BOLD_BRIGHT + "🆘 Lựa chọn không hợp lệ. Vui lòng nhap lại" + RESET);
                     break;
             }
+            pressAndKey();
+
         }
     }
 
@@ -105,16 +113,18 @@ public class InvoiceManagementUI implements IGenericUI {
         }
 
 
-        System.out.println(BLUE_BOLD_BRIGHT + "------------------------ Danh sách hóa đơn ---------------------------");
+        System.out.println(BLUE_BOLD_BRIGHT + "------------------------ Danh sách hóa đơn --------------------------");
         System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", "ID", "Tên khách hàng", "Thời gian tạo", "Tổng tiền");
+        System.out.println("|-------------------------------------------------------------------|");
         for (Invoice invoice : list) {
 
             String customerName = customerService.getById(invoice.getCustomerId()).getName();
             String formattedDate = formatDateTime(invoice.getCreateAt());
+            String formattedCurrency = formatCurrency(invoice.getTotalAmount());
 
-            System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", invoice.getId(), customerName, formattedDate, invoice.getTotalAmount());
+            System.out.printf("| %-2s | %-15s | %-20s | %-20s |\n", invoice.getId(), customerName, formattedDate, formattedCurrency);
         }
-        System.out.println("--------------------------------------------------------------------" + RESET);
+        System.out.println("-----------------------------------------------------------------------" + RESET);
     }
 
 
@@ -219,6 +229,7 @@ public class InvoiceManagementUI implements IGenericUI {
 
         }
         invoiceService.createInvoice(invoiceCreateDTO, detailList);
+        System.out.println(GREEN_BOLD_BRIGHT+ "✅ Đã tạo thành công hóa đơn" + RESET);
     }
 
     // tìm kiếm hoa đơn theo tên khách hàng

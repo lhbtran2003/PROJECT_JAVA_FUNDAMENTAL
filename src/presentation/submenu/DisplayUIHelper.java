@@ -5,6 +5,7 @@ import entity.Customer;
 import entity.Product;
 import static utils.ColorUtils.*;
 import static utils.DateTimeFormatterUtils.*;
+import static utils.CurrencyFormatterUtils.*;
 
 
 import java.util.List;
@@ -15,9 +16,9 @@ public class DisplayUIHelper {
             System.out.println(RED_BRIGHT +" ❌ Không có sản phẩm nào.");
             return;
         }
-        System.out.println(BLUE_BOLD_BRIGHT + "--------------------------- Danh Sách Sản Phẩm ----------------------------");
+        System.out.println(BLUE_BOLD_BRIGHT + "-------------------------------- Danh Sách Sản Phẩm ----------------------------------");
         System.out.printf("| %-4s | %-30s | %-15s | %-12s | %-10s |\n", "ID", "Name", "Brand", "Price", "Stock");
-        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println("--------------------------------------------------------------------------------------");
 
         for (Product product : productList) {
             System.out.printf("| %-4s | %-30s | %-15s | %-12.2f | %-10s |\n",
@@ -27,7 +28,7 @@ public class DisplayUIHelper {
                     product.getPrice(),
                     product.getStock());
         }
-        System.out.println("-------------------------------------------------------------------------------------------" + RESET);
+        System.out.println("---------------------------------------------------------------------------------------" + RESET);
 
     }
 
@@ -36,9 +37,9 @@ public class DisplayUIHelper {
             System.out.println(RED_BRIGHT +"😭 Danh sách khách hàng hiện đang trống." + RESET);
             return;
         }
-        System.out.println(BLUE_BOLD_BRIGHT + "----------------------------- Danh Sách Khách Hàng -----------------------------");
+        System.out.println(BLUE_BOLD_BRIGHT + "------------------------------------------ Danh Sách Khách Hàng ------------------------------------------");
         System.out.printf("| %-6s | %-20s | %-15s | %-25s | %-25s |\n", "ID", "Name", "Phone", "Email", "Address");
-        System.out.println("-------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------------------");
 
         for (Customer customer : customerList) {
             System.out.printf("| %-6s | %-20s | %-15s | %-25s | %-25s |\n",
@@ -48,25 +49,26 @@ public class DisplayUIHelper {
                     customer.getEmail(),
                     customer.getAddress());
         }
-        System.out.println("-------------------------------------------------------------------------------------------" + RESET);
+        System.out.println("----------------------------------------------------------------------------------------------------------" + RESET);
 
     }
 
     public static void showInvoiceList(List<InvoiceViewDTO> invoices) {
-        System.out.println(BLUE_BOLD_BRIGHT + "--------------------- DANH SÁCH HÓA ĐƠN PHÙ HỢP -------------------------");
+        System.out.println(BLUE_BOLD_BRIGHT + "---------------------------- DANH SÁCH HÓA ĐƠN PHÙ HỢP ----------------------------------");
         System.out.printf("| %-6s | %-30s | %-15s | %-25s |\n", "ID", "Tên khách hàng", "Tổng tiền", "Ngày tạo");
-        System.out.println("---------------------------------------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
 
         for (InvoiceViewDTO invoice : invoices) {
             String formattedDate = formatDateTime(invoice.getCreateAt());
-            System.out.printf("| %-6d | %-30s | %-15.2f | %-25s |\n",
+            String formattedCurrency = formatCurrency(invoice.getTotalAmount());
+            System.out.printf("| %-6d | %-30s | %-15s | %-25s |\n",
                     invoice.getId(),
                     invoice.getCustomerName(),
-                    invoice.getTotalAmount(),
+                    formattedCurrency,
                     formattedDate
             );
         }
-        System.out.println("---------------------------------------------------------------------------------------------------------" + RESET);
+        System.out.println("-----------------------------------------------------------------------------------------" + RESET);
 
     }
 
