@@ -1,4 +1,4 @@
-package bussiness.dto;
+package bussiness.dto.invoicedetail;
 
 import java.math.BigDecimal;
 

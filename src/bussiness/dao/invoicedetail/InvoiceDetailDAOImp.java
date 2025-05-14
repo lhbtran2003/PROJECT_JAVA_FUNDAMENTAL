@@ -1,11 +1,8 @@
 package bussiness.dao.invoicedetail;
 
-import bussiness.dto.InvoiceDetailCreateDTO;
-import bussiness.service.invoice.InvoiceServiceImp;
+import bussiness.dto.invoicedetail.InvoiceDetailCreateDTO;
 import config.DBConnection;
-import entity.InvoiceDetail;
 
-import java.security.PublicKey;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;

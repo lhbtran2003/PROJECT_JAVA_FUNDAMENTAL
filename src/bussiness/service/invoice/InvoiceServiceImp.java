@@ -3,9 +3,9 @@ package bussiness.service.invoice;
 import bussiness.dao.invoice.InvoiceDAOImp;
 import bussiness.dao.invoicedetail.InvoiceDetailDAOImp;
 import bussiness.dao.product.ProductDAOImp;
-import bussiness.dto.InvoiceCreateDTO;
-import bussiness.dto.InvoiceDetailCreateDTO;
-import bussiness.dto.InvoiceViewDTO;
+import bussiness.dto.invoice.InvoiceCreateDTO;
+import bussiness.dto.invoicedetail.InvoiceDetailCreateDTO;
+import bussiness.dto.invoice.InvoiceViewDTO;
 import entity.Invoice;
 
 import java.time.LocalDate;
@@ -50,22 +50,8 @@ public class InvoiceServiceImp implements IInvoiceService {
     }
 
     @Override
-    public List<InvoiceViewDTO> findByDate(String dateInput) {
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        LocalDate date;
-        try {
-            if (dateInput.contains("/")) {
-                date = LocalDate.parse(dateInput, formatter1);
-            } else {
-                date = LocalDate.parse(dateInput, formatter2);
-            }
-            return invoiceDAOImp.getInvoiceByDate(date);
-        } catch (DateTimeParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<InvoiceViewDTO> findByDate(LocalDate dateInput) {
+        return invoiceDAOImp.getInvoiceByDate(dateInput);
     }
 
     @Override

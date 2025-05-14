@@ -1,6 +1,6 @@
 package presentation.submenu;
 
-import bussiness.dto.InvoiceViewDTO;
+import bussiness.dto.invoice.InvoiceViewDTO;
 import entity.Customer;
 import entity.Product;
 import static utils.PrintUtils.*;

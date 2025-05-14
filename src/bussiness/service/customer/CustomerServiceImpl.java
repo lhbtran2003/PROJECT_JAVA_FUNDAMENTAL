@@ -53,4 +53,26 @@ public class CustomerServiceImpl implements ICustomerService {
     public List<Customer> getCustomerByName(String name) {
         return customerDAOImpl.findCustomerByName(name);
     }
+
+    @Override
+    public boolean isPhoneNumberExist(String phoneNumber) {
+        List<Customer> list = getAll();
+        for (Customer customer : list) {
+            if (customer.getPhone().equals(phoneNumber)) {
+                return true; // số điện thoại đã tồn tại trong csdl
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isEmailExist(String email) {
+        List<Customer> list = getAll();
+        for (Customer customer : list) {
+            if (customer.getEmail().equals(email)) {
+                return true; // email đã tồn tại trong csdl
+            }
+        }
+        return false;
+    }
 }

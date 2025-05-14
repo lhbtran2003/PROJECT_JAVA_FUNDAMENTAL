@@ -4,9 +4,12 @@ import bussiness.service.revenue.RevenueServiceImp;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
 import static utils.PrintUtils.*;
+import static validate.InvoiceValidator.*;
+import static validate.RevenueValidator.*;
 
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class RevenueStatisticsUI implements IGenericUI {
@@ -53,31 +56,31 @@ public class RevenueStatisticsUI implements IGenericUI {
 
 
     private void getTotalByDateInPresentation(Scanner sc) {
-        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập vào ngày tháng năm đầy đủ nha: " + RESET);
-        String dateInput =sc.nextLine();
+        LocalDate date = null;
+        while (date == null) {
+            System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập vào ngày tháng năm đầy đủ nha: " + RESET);
+            String dateInput = sc.nextLine();
+            date = validateDateInput(dateInput);
+        }
 
-        BigDecimal totalRevenue = revenueServiceImp.getTotalRevenueByDate(dateInput);
+        BigDecimal totalRevenue = revenueServiceImp.getTotalRevenueByDate(date);
 
         if (totalRevenue.compareTo(BigDecimal.ZERO) == 0) {
             System.out.println(RED_BOLD + "❌ Không có doanh thu trong ngày này hoặc ngày không hợp lệ."+ RESET);
         } else {
-            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu ngày %s là: %,.2f VNĐ\n", dateInput, totalRevenue + RESET);
+            System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu ngày %s là: %,.2f VNĐ\n", date, totalRevenue + RESET);
         }
 
     }
 
     private void getTotalByMonthInPresentation (Scanner sc) {
-        System.out.print(YELLOW_BOLD_BRIGHT + "❔ Nhập tháng cần tra cứu: ");
-        String monthInput = sc.nextLine();
+        String monthInput = validateMonthInput(sc, YELLOW_BOLD_BRIGHT + "❔ Nhập tháng cần tra cứu: ");
         int month = Integer.parseInt(monthInput);
-
-        System.out.print("❔ Nhập năm cần tra cứu: "+RESET);
-        String yearInput = sc.nextLine();
-        int year = Integer.parseInt(yearInput);
+        int year = validateIntInput(sc, "❔ Nhập năm cần tra cứu: "+RESET);
 
         BigDecimal totalVenue = revenueServiceImp.getTotalRevenueByMonth(month, year);
 
-        System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của tháng %s/%s là %,.2f VNĐ", monthInput, yearInput, totalVenue + RESET);
+        System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của tháng %s/%d là %,.2f VNĐ", monthInput, year, totalVenue + RESET);
     }
 
 
@@ -91,3 +94,4 @@ public class RevenueStatisticsUI implements IGenericUI {
         System.out.printf(BLUE_BOLD_BRIGHT + "Tổng doanh thu của năm %s là %,.2f VNĐ", yearInput, totalVenue + RESET);
     }
 }
+

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ICustomerService extends IGenericService<Customer, Integer> {
     List<Customer> getCustomerByName(String name);
+    boolean isPhoneNumberExist(String phoneNumber);
+    boolean isEmailExist(String email);
 }

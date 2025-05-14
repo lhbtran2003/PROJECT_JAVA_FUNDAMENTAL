@@ -23,21 +23,8 @@ public class RevenueServiceImp implements IRevenueService{
     }
 
     @Override
-    public BigDecimal getTotalRevenueByDate(String dateInput) {
-        DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
-        LocalDate date;
-        try {
-            if (dateInput.contains("/")) {
-                date = LocalDate.parse(dateInput, formatter1);
-            } else {
-                date = LocalDate.parse(dateInput, formatter2);
-            }
-        } catch (DateTimeParseException e) {
-            return BigDecimal.ZERO;
-        }
-        return revenueDAOImp.getTotalRevenueByDate(date);
+    public BigDecimal getTotalRevenueByDate(LocalDate dateInput) {
+        return revenueDAOImp.getTotalRevenueByDate(dateInput);
     }
 
     @Override

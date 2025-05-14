@@ -2,6 +2,8 @@ package presentation.auth;
 
 import bussiness.dao.auth.AdminAuthenDAO;
 import entity.Admin;
+import static validate.InputMethod.*;
+
 import static utils.PrintUtils.*;
 
 
@@ -11,10 +13,8 @@ public class AdminAuthenUI {
 
     public static boolean adminRegister() {
         Scanner sc = new Scanner(System.in);
-        System.out.print(YELLOW_BOLD_BRIGHT + "Nhập username: ");
-        AdminAuthenDAO.setUsername(sc.nextLine());
-        System.out.print("Nhập mật khẩu: " + RESET);
-        AdminAuthenDAO.setPassword(sc.nextLine());
+        AdminAuthenDAO.setUsername( validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT + "Nhập username: "));
+        AdminAuthenDAO.setPassword(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT + "Nhập mật khẩu: " + RESET));
 
         // xác thực tài khoan ở đây
         Admin admin = AdminAuthenDAO.adminAuthen();

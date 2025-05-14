@@ -1,4 +1,4 @@
-package bussiness.service;
+package bussiness.service.auth;
 
 import bussiness.dao.auth.AdminAuthenDAO;
 

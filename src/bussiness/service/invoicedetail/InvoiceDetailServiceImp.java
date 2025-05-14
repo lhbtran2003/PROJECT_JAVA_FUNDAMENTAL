@@ -1,9 +1,7 @@
 package bussiness.service.invoicedetail;
 
 import bussiness.dao.invoicedetail.InvoiceDetailDAOImp;
-import bussiness.dto.InvoiceDetailCreateDTO;
-import bussiness.service.invoice.IInvoiceService;
-import entity.InvoiceDetail;
+import bussiness.dto.invoicedetail.InvoiceDetailCreateDTO;
 
 public class InvoiceDetailServiceImp implements IInvoiceDetailService {
     private final InvoiceDetailDAOImp invoiceDetailDAOImp;

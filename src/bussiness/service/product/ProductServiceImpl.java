@@ -1,12 +1,13 @@
 package bussiness.service.product;
 
 import bussiness.dao.product.ProductDAOImp;
+import entity.Customer;
 import entity.Product;
 
 import java.util.List;
 
-public class ProductServiceImpl implements IProductService{
-    private  static ProductServiceImpl instance;
+public class ProductServiceImpl implements IProductService {
+    private static ProductServiceImpl instance;
     private ProductDAOImp productDAOImp;
 
     public static ProductServiceImpl getInstance() {
@@ -21,7 +22,7 @@ public class ProductServiceImpl implements IProductService{
     }
 
     @Override
-    public void addMultiple (List<Product> products) {
+    public void addMultiple(List<Product> products) {
         for (Product product : products) {
             productDAOImp.save(product);
         }
@@ -70,5 +71,16 @@ public class ProductServiceImpl implements IProductService{
     @Override
     public void updateProductStock(int productId, int newStock) {
         productDAOImp.updateStock(productId, newStock);
+    }
+
+    @Override
+    public boolean isProductNameExist(String name) {
+        List<Product> products = getAll();
+        for (Product product : products) {
+            if (product.getName().equals(name)) {
+                return true; // đã tồn tại spham này trong csdl
+            }
+        }
+        return false;
     }
 }

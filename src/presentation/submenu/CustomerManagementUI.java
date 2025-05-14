@@ -6,6 +6,9 @@ import entity.Product;
 import presentation.IGenericUI;
 import presentation.MainMenuAfterLogin;
 import static utils.PrintUtils.*;
+import static validate.InputMethod.*;
+import static validate.CustomerValidator.*;
+
 
 
 import java.util.ArrayList;
@@ -63,22 +66,22 @@ public class CustomerManagementUI implements IGenericUI {
 
     // thêm mới khách hàng
     private void addMultipleInPresentation(Scanner sc) {
-        System.out.print(YELLOW_BOLD_BRIGHT+ "❔Nhập số lượng khách hàng bạn muốn thêm: ");
-        int count = Integer.parseInt(sc.nextLine());
+        int count = validateIntInput(sc, YELLOW_BOLD_BRIGHT+ "❔Nhập số lượng khách hàng bạn muốn thêm: ");
 
         List<Customer> customers = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             Customer customer = new Customer();
-            System.out.println("👌 Nhập thông tin khách hàng thứ " + (i + 1));
-            System.out.print("😊 Nhập tên khách hàng: ");
-            customer.setName(sc.nextLine());
-            System.out.print("😋 Nhập số điện thoại ");
-            customer.setPhone(sc.nextLine());
-            System.out.print("😗 Nhập email: ");
-            customer.setEmail(sc.nextLine());
-            System.out.print("🤔 Nhập địa chỉ: " + RESET);
-            customer.setAddress(sc.nextLine());
+            System.out.println(YELLOW_UNDERLINED + "👌 Nhập thông tin khách hàng thứ " + (i + 1) + RESET);
+
+            customer.setName(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT +"😊 Nhập tên khách hàng: "));
+
+            customer.setPhone(validatePhoneNumber(sc, "😋 Nhập số điện thoại ", customerServiceImpl));
+
+            customer.setEmail(validateEmail(sc, "😗 Nhập email: ", customerServiceImpl));
+
+            customer.setAddress(validateInputNotEmpty(sc, "🤔 Nhập địa chỉ: " + RESET));
+
             customers.add(customer);
             System.out.println();
         }
@@ -93,8 +96,7 @@ public class CustomerManagementUI implements IGenericUI {
 
     // cập nhật thông tin khách hàng bao gồm: tên, sdt, email, địa chỉ
     private void updateCustomerInPresentation(Scanner sc) {
-        System.out.print(YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn sửa: " +RESET);
-        int id = Integer.parseInt(sc.nextLine());
+        int id = validateIntInput(sc, YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn sửa: " +RESET);
 
         Customer customer = customerServiceImpl.getById(id);
         if (customer == null) {
@@ -110,25 +112,22 @@ public class CustomerManagementUI implements IGenericUI {
             System.out.println("4🍶 Địa chỉ");
             System.out.println("5😎 Đã xong, thoát");
             System.out.println("......................" + RESET);
-            System.out.print(YELLOW_BOLD_BRIGHT +"ヽ（≧□≦）ノ Bạn chon cái nào: " + RESET);
+            System.out.print(YELLOW_BOLD_BRIGHT +"ヽ（≧□≦）ノ Bạn chon cái nào: ");
             byte choice = Byte.parseByte(sc.nextLine());
 
             switch (choice) {
                 case 1:
-                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập tên mới cho sản phẩm này: " + RESET);
-                    customer.setName(sc.nextLine());
+                    customer.setName(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT +"➡️ Nhập tên mới cho khách hàng này: " + RESET));
                     break;
                 case 2:
-                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập số điện thoại mới cho khách hàng này: "+RESET);
-                    customer.setPhone(sc.nextLine());
+                    // cái này phải chỉnh validate sdt lại
+                    customer.setPhone(validatePhoneNumber(sc, YELLOW_BOLD_BRIGHT+"➡️ Nhập số điện thoại mới cho khách hàng này: " + RESET, customerServiceImpl));
                     break;
                 case 3:
-                    System.out.print(YELLOW_BOLD_BRIGHT +"➡️ Nhập email mới cho khách hàng này: "+ RESET);
-                    customer.setEmail(sc.nextLine());
+                    customer.setEmail(validateEmail(sc, YELLOW_BOLD_BRIGHT +"➡️ Nhập email mới cho khách hàng này: "+ RESET, customerServiceImpl));
                     break;
                 case 4:
-                    System.out.print(YELLOW_BOLD_BRIGHT+ "➡️ Nhập số địa chỉ mới cho khách hàng này: "+ RESET);
-                    customer.setAddress(sc.nextLine());
+                    customer.setAddress(validateInputNotEmpty(sc, YELLOW_BOLD_BRIGHT+ "➡️ Nhập số địa chỉ mới cho khách hàng này: " + RESET));
                     break;
                 case 5:
                     System.out.println(GREEN_BOLD_BRIGHT +"🎉 Đã hoàn thành việc chỉnh sửa khách hàng" + RESET);
@@ -143,8 +142,7 @@ public class CustomerManagementUI implements IGenericUI {
 
     // xóa khách hàng theo id
     private void deleteCustomerInPresentation (Scanner sc) {
-        System.out.print(YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn xóa: "+ RESET);
-        int id = Integer.parseInt(sc.nextLine());
+        int id = validateIntInput(sc, YELLOW_BOLD_BRIGHT +"❔ Nhập id của khách hàng muốn xóa: "+ RESET);
 
         Customer customer = customerServiceImpl.getById(id);
         if (customer == null) {

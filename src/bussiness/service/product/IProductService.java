@@ -11,4 +11,5 @@ public interface IProductService extends IGenericService<Product, Integer> {
      List<Product> getProductsByStock(int minStock, int maxStock);
      List<Product> getProductsByName(String name);
      void updateProductStock(int productId, int newStock);
+     boolean isProductNameExist(String name);
 }

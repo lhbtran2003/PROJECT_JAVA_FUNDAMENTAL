@@ -1,7 +1,6 @@
 package bussiness.dao.invoicedetail;
 
-import bussiness.dto.InvoiceDetailCreateDTO;
-import entity.InvoiceDetail;
+import bussiness.dto.invoicedetail.InvoiceDetailCreateDTO;
 
 public interface IInvoiceDetailDAO {
     void save(InvoiceDetailCreateDTO invoiceDetail);

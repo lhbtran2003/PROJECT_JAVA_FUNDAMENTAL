@@ -1,8 +1,8 @@
 package bussiness.dao.invoice;
 
 import bussiness.dao.IBasicDAO;
-import bussiness.dto.InvoiceCreateDTO;
-import bussiness.dto.InvoiceViewDTO;
+import bussiness.dto.invoice.InvoiceCreateDTO;
+import bussiness.dto.invoice.InvoiceViewDTO;
 import entity.Invoice;
 
 import java.time.LocalDate;
